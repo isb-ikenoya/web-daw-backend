@@ -3,7 +3,7 @@ resource "aws_s3_bucket" "front" {
   bucket = var.bucket_name
 
   tags = {
-    "created_by" = "yuta_ikenoya"
+    "created_by" = var.owner
   }
 }
 
