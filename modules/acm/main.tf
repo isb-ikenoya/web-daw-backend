@@ -40,7 +40,7 @@ resource "aws_route53_record" "route53_acm_dns_resolve" {
   zone_id         = var.zone_id
   name            = each.value.name
   type            = each.value.type
-  ttl             = 600
+  ttl             = 60
   records         = [each.value.record]
 }
 resource "aws_acm_certificate_validation" "cert_valid" {
