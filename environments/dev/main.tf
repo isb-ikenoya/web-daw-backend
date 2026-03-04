@@ -23,3 +23,17 @@ module "route53" {
   env           = local.env
   project       = local.project
 }
+
+module "acm" {
+  source = "../../modules/acm"
+  providers = {
+    aws = aws.virginia
+  }
+
+  domain  = var.domain
+  owner   = local.owner
+  project = local.project
+  env     = local.env
+
+  depends_on = [module.route53]
+}
