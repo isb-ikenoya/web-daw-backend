@@ -18,3 +18,8 @@ variable "env" {
   description = "環境名"
   type        = string
 }
+
+variable "zone_id" {
+  description = "対象のRoute53ゾーンID"
+  type        = string
+}

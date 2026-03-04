@@ -34,6 +34,7 @@ module "acm" {
   owner   = local.owner
   project = local.project
   env     = local.env
+  zone_id = module.route53.zone_id
 
   depends_on = [module.route53]
 }
