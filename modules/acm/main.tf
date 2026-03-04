@@ -1,3 +1,13 @@
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+      # バージョンは環境に合わせて調整してください（例: 5.0以上など）
+      version = ">= 5.0"
+    }
+  }
+}
+
 resource "aws_acm_certificate" "virginia_cert" {
 
   domain_name       = "*.${var.domain}"
