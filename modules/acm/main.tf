@@ -10,7 +10,7 @@ terraform {
 
 resource "aws_acm_certificate" "virginia_cert" {
 
-  domain_name       = "*.${var.domain}"
+  domain_name       = var.domain
   validation_method = "DNS"
 
   tags = {
