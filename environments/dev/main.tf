@@ -16,9 +16,10 @@ module "s3_front_end" {
 }
 
 module "route53" {
-  source  = "../../modules/route53"
-  domain  = "various-ikenoya.isb-bs.com"
-  owner   = local.owner
-  env     = local.env
-  project = local.project
+  source        = "../../modules/route53"
+  parent_domain = var.parent_domain
+  domain        = var.domain
+  owner         = local.owner
+  env           = local.env
+  project       = local.project
 }
