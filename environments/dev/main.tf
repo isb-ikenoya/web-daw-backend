@@ -38,3 +38,11 @@ module "acm" {
 
   depends_on = [module.route53]
 }
+
+module "cloud_front" {
+  source                 = "../../modules/cloudfront"
+  acm_certificate_arn    = module.acm.certificate_arn
+  origin_domain_name     = module.s3_front_end.domain_name
+  origin_id              = "S3-${module.s3_front_end.bucket_name}"
+  origin_access_identity = module.s3_front_end.cloudfront_access_identity_path
+}
