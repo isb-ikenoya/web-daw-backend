@@ -75,6 +75,17 @@ resource "aws_cloudfront_distribution" "this" {
 }
 
 # CloudFront関連のS3バケットポリシーの更新
+
+# エラー修正のため仮に残す
+resource "aws_cloudfront_origin_access_identity" "oai" {
+  comment = "old oai"
+
+  lifecycle {
+    # 削除する前に新しいリソースを作る（または依存関係を整理する）
+    create_before_destroy = true
+  }
+}
+
 # S3バケットポリシー
 data "aws_iam_policy_document" "front" {
   statement {
