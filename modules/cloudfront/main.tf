@@ -95,6 +95,6 @@ data "aws_iam_policy_document" "front" {
 }
 
 resource "aws_s3_bucket_policy" "front" {
-  bucket = aws_s3_bucket.front.id
+  bucket = var.s3_bucket_id
   policy = data.aws_iam_policy_document.front.json
 }
