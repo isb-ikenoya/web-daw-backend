@@ -1,3 +1,8 @@
+variable "owner" {
+  description = "作成者名"
+  type        = string
+}
+
 variable "acm_certificate_arn" {
   description = "証明書arn"
   type        = string

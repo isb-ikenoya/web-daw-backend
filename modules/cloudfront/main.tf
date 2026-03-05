@@ -1,9 +1,15 @@
 resource "aws_cloudfront_distribution" "this" {
   # 基本設定
+
   enabled             = true
   is_ipv6_enabled     = true
   comment             = "WebDaw用"
   default_root_object = "index.html"
+
+  tags = {
+    Name       = "WebDaw-CloudFront"
+    created_by = var.owner
+  }
 
   # 価格クラス
   price_class = "PriceClass_200" # アジア・ヨーロッパ・北米をカバー

@@ -41,6 +41,7 @@ module "acm" {
 
 module "cloud_front" {
   source                 = "../../modules/cloudfront"
+  owner                  = local.owner
   acm_certificate_arn    = module.acm.certificate_arn
   origin_domain_name     = module.s3_front_end.domain_name
   origin_id              = "S3-${module.s3_front_end.bucket_name}"
