@@ -7,3 +7,7 @@ output "bucket_name" {
   description = "バケット名"
   value       = aws_s3_bucket.front.bucket
 }
+
+output "bucket_arn" {
+  value = aws_s3_bucket.front.arn
+}

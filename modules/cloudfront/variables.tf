@@ -28,9 +28,9 @@ variable "origin_id" {
   type        = string
 }
 
-/*variable "origin_access_identity" {
+variable "s3_bucket_arn" {
   type = string
-}*/
+}
 
 variable "aliase_domain" {
   description = "代替ドメイン"

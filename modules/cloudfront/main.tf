@@ -79,7 +79,7 @@ resource "aws_cloudfront_distribution" "this" {
 data "aws_iam_policy_document" "front" {
   statement {
     actions   = ["s3:GetObject"]
-    resources = ["${aws_s3_bucket.front.arn}/*"]
+    resources = ["${var.s3_bucket_arn}/*"]
 
     principals {
       type        = "Service"
