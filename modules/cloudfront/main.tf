@@ -1,3 +1,13 @@
+# OACの設定
+resource "aws_cloudfront_origin_access_control" "s3" {
+  name                              = "${var.project}-${var.env}-s3-oac"
+  description                       = "OAC for S3 bucket"
+  origin_access_control_origin_type = "s3"
+  signing_behavior                  = "always"
+  signing_protocol                  = "sigv4"
+}
+
+# CloudFront
 resource "aws_cloudfront_distribution" "this" {
   # 基本設定
 
@@ -5,6 +15,7 @@ resource "aws_cloudfront_distribution" "this" {
   is_ipv6_enabled     = true
   comment             = "WebDaw用"
   default_root_object = "index.html"
+  aliases             = [var.aliase_domain]
 
   tags = {
     Name       = "WebDaw-CloudFront"
@@ -23,11 +34,12 @@ resource "aws_cloudfront_distribution" "this" {
   }
 
   origin {
-    domain_name = var.origin_domain_name
-    origin_id   = var.origin_id # オリジンの一意のID
-    s3_origin_config {
+    domain_name              = var.origin_domain_name
+    origin_id                = var.origin_id                              # オリジンの一意のID
+    origin_access_control_id = aws_cloudfront_origin_access_control.s3.id # OAC
+    /*s3_origin_config {
       origin_access_identity = var.origin_access_identity
-    }
+    }*/
   }
 
   default_cache_behavior {
@@ -60,4 +72,29 @@ resource "aws_cloudfront_distribution" "this" {
     response_page_path = "/index.html" # SPAのルーティング対応
   }
 
+}
+
+# CloudFront関連のS3バケットポリシーの更新
+# S3バケットポリシー
+data "aws_iam_policy_document" "front" {
+  statement {
+    actions   = ["s3:GetObject"]
+    resources = ["${aws_s3_bucket.front.arn}/*"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["cloudfront.amazonaws.com"]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "AWS:SourceArn"
+      values   = [aws_cloudfront_distribution.this.arn] # CloudFrontのARNを指定
+    }
+  }
+}
+
+resource "aws_s3_bucket_policy" "front" {
+  bucket = aws_s3_bucket.front.id
+  policy = data.aws_iam_policy_document.front.json
 }

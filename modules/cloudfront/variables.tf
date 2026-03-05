@@ -3,6 +3,16 @@ variable "owner" {
   type        = string
 }
 
+variable "env" {
+  description = "環境名"
+  type        = string
+}
+
+variable "project" {
+  description = "プロジェクト名"
+  type        = string
+}
+
 variable "acm_certificate_arn" {
   description = "証明書arn"
   type        = string
@@ -18,6 +28,11 @@ variable "origin_id" {
   type        = string
 }
 
-variable "origin_access_identity" {
+/*variable "origin_access_identity" {
   type = string
+}*/
+
+variable "aliase_domain" {
+  description = "代替ドメイン"
+  type        = string
 }
