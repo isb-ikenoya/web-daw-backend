@@ -112,7 +112,6 @@ resource "aws_route53_record" "record_a" {
   zone_id = data.aws_route53_zone.this.zone_id
   name    = var.aliase_domain
   type    = "A"
-  ttl     = 300
 
   alias {
     name                   = aws_cloudfront_distribution.this.domain_name
@@ -126,7 +125,6 @@ resource "aws_route53_record" "record_aaaa" {
   zone_id = data.aws_route53_zone.this.zone_id
   name    = var.aliase_domain
   type    = "AAAA"
-  ttl     = 300
 
   alias {
     name                   = aws_cloudfront_distribution.this.domain_name
