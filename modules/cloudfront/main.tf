@@ -98,3 +98,32 @@ resource "aws_s3_bucket_policy" "front" {
   bucket = var.s3_bucket_id
   policy = data.aws_iam_policy_document.front.json
 }
+
+# CloudFrontのURLをRoute53に登録
+
+# 対象のホストゾーンの情報を取得する（データソース）
+data "aws_route53_zone" "this" {
+  name         = var.aliase_domain # 対象のドメイン
+  private_zone = false             # パブリックの場合
+}
+
+# Aレコードを追加する
+resource "aws_route53_record" "record_a" {
+  zone_id = data.aws_route53_zone.this.zone_id
+  name    = var.aliase_domain
+  type    = "A"
+  ttl     = 300
+  # 作成した新しいゾーンが持つ4つのネームサーバーを指定
+  records = [aws_cloudfront_distribution.this.domain_name]
+}
+
+# AAAAレコードを追加する
+resource "aws_route53_record" "record_aaaa" {
+  zone_id = data.aws_route53_zone.this.zone_id
+  name    = var.aliase_domain
+  type    = "AAAA"
+  ttl     = 300
+  # 作成した新しいゾーンが持つ4つのネームサーバーを指定
+  records = [aws_cloudfront_distribution.this.domain_name]
+}
+
