@@ -113,8 +113,12 @@ resource "aws_route53_record" "record_a" {
   name    = var.aliase_domain
   type    = "A"
   ttl     = 300
-  # 作成した新しいゾーンが持つ4つのネームサーバーを指定
-  records = [aws_cloudfront_distribution.this.domain_name]
+
+  alias {
+    name                   = aws_cloudfront_distribution.this.domain_name
+    zone_id                = aws_cloudfront_distribution.this.hosted_zone_id
+    evaluate_target_health = false
+  }
 }
 
 # AAAAレコードを追加する
@@ -123,7 +127,11 @@ resource "aws_route53_record" "record_aaaa" {
   name    = var.aliase_domain
   type    = "AAAA"
   ttl     = 300
-  # 作成した新しいゾーンが持つ4つのネームサーバーを指定
-  records = [aws_cloudfront_distribution.this.domain_name]
+
+  alias {
+    name                   = aws_cloudfront_distribution.this.domain_name
+    zone_id                = aws_cloudfront_distribution.this.hosted_zone_id
+    evaluate_target_health = false
+  }
 }
 
