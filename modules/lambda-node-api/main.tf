@@ -7,18 +7,31 @@ resource "aws_s3_bucket" "lambda" {
   }
 }
 
+# 空のテキストファイル作成
+resource "local_file" "dummy_txt" {
+  content  = "initial deployment"
+  filename = "${path.module}/dummy.txt"
+}
+
+# Zipに固める
+data "archive_file" "dummy_zip" {
+  type        = "zip"
+  source_file = local_file.dummy_txt.filename
+  output_path = "${path.module}/dummy.zip"
+}
+
 # 初回デプロイ用のダミーオブジェクト
 resource "aws_s3_object" "dummy" {
-  bucket  = aws_s3_bucket.lambda.id
-  key     = "initial/lambda.zip"
-  content = "dummy"
+  bucket = aws_s3_bucket.lambda.id
+  key    = "initial/lambda.zip"
+  source = data.archive_file.dummy_zip.output_path # content ではなく source を使う
   tags = {
     "created_by" = var.owner
   }
 
   lifecycle {
     # 一度作ったら、中身が手動やCIで変わっても無視する（ソースコードの変更を検知したくない）
-    ignore_changes = [content, source, etag]
+    ignore_changes = [source, etag]
   }
 }
 
