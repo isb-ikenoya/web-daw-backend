@@ -74,3 +74,27 @@ resource "aws_iam_role_policy_attachment" "lambda_logs" {
   role       = aws_iam_role.lambda_exec.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
+
+# API Gatewayの設定
+resource "aws_apigatewayv2_api" "this" {
+  name          = "${var.project}-${var.env}-lambda-apigateway"
+  protocol_type = "HTTP"
+  cors_configuration {
+    allow_origins = ["*"]
+    allow_methods = ["GET", "POST", "PUT", "DELETE"]
+    allow_headers = ["Content-Type", "Authorization"]
+    max_age       = 300
+  }
+  tags = {
+    created_by = var.owner
+  }
+}
+
+# Lambda関数とAPI Gatewayの統合
+resource "aws_apigatewayv2_integration" "lambda_integration" {
+  api_id                 = aws_apigatewayv2_api.this.id
+  integration_type       = "AWS_PROXY"
+  integration_uri        = aws_lambda_function.api.invoke_arn
+  integration_method     = "POST" # lambdaの場合は必ずPOST
+  payload_format_version = "2.0"
+}
