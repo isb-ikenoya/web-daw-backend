@@ -98,3 +98,26 @@ resource "aws_apigatewayv2_integration" "lambda_integration" {
   integration_method     = "POST" # lambdaの場合は必ずPOST
   payload_format_version = "2.0"
 }
+
+resource "aws_apigatewayv2_route" "api_route" {
+  api_id    = aws_apigatewayv2_api.this.id
+  route_key = "ANY /{proxy+}" # すべてのリクエストを受け付ける
+  target    = "integrations/${aws_apigatewayv2_integration.lambda_integration.id}"
+}
+
+resource "aws_apigatewayv2_stage" "lambda_stage" {
+  api_id      = aws_apigatewayv2_api.this.id
+  name        = "$default" # URLに余計なパスを入れない
+  auto_deploy = true       # 変更を即時反映
+}
+
+# Lambdaの権限設定（Api Gatewayから叩けるようにする）
+resource "aws_lambda_permission" "api_gw" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.api.function_name # 対象のLambda
+  principal     = "apigateway.amazonaws.com"
+
+  # どのAPI Gatewayからの呼び出しを許可するか（セキュリティ上、絞るのがベスト）
+  source_arn = "${aws_apigatewayv2_api.this.execution_arn}/*/*"
+}
