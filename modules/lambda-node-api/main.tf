@@ -22,7 +22,7 @@ data "archive_file" "dummy_zip" {
 # 初回デプロイ用のダミーオブジェクト
 resource "aws_s3_object" "dummy" {
   bucket = aws_s3_bucket.lambda.id
-  key    = "initial/lambda.zip"
+  key    = "initial/lambda_fix_v4.zip"
   # リポジトリにあるzipファイルを直接指定
   source = "${path.module}/dummy.zip"
   # 以前の失敗したキャッシュを上書きするために etag を設定
