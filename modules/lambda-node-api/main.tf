@@ -107,8 +107,8 @@ resource "aws_apigatewayv2_route" "api_route" {
 
 resource "aws_apigatewayv2_stage" "lambda_stage" {
   api_id      = aws_apigatewayv2_api.this.id
-  name        = "$default" # URLに余計なパスを入れない
-  auto_deploy = true       # 変更を即時反映
+  name        = "main-stage"
+  auto_deploy = true # 変更を即時反映
 }
 
 # Lambdaの権限設定（Api Gatewayから叩けるようにする）
