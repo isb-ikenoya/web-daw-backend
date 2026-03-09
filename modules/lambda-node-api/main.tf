@@ -23,7 +23,11 @@ data "archive_file" "dummy_zip" {
 resource "aws_s3_object" "dummy" {
   bucket = aws_s3_bucket.lambda.id
   key    = "initial/lambda.zip"
-  source = data.archive_file.dummy_zip.output_path # content ではなく source を使う
+  # リポジトリにあるzipファイルを直接指定
+  source = "${path.module}/dummy.zip"
+  # 以前の失敗したキャッシュを上書きするために etag を設定
+  etag = filemd5("${path.module}/dummy.zip")
+
   tags = {
     "created_by" = var.owner
   }
