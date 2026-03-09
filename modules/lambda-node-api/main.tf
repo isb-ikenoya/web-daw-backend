@@ -7,18 +7,6 @@ resource "aws_s3_bucket" "lambda" {
   }
 }
 
-# 空のテキストファイル作成
-# メモリ上でダミーファイルの内容を定義して Zip 化する
-data "archive_file" "dummy_zip" {
-  type        = "zip"
-  output_path = "${path.module}/lambda_dummy.zip"
-
-  source {
-    content  = "hello world" # ファイルの中身
-    filename = "index.js"    # Zip 内でのファイル名
-  }
-}
-
 # 初回デプロイ用のダミーオブジェクト
 resource "aws_s3_object" "dummy" {
   bucket = aws_s3_bucket.lambda.id
