@@ -11,7 +11,7 @@ locals {
 
 module "s3_front_end" {
   source      = "../../modules/s3"
-  bucket_name = "${local.project}-${local.env}-bucket"
+  bucket_name = "${local.project}-${local.env}-front-bucket"
   owner       = local.owner
 }
 
@@ -50,4 +50,12 @@ module "cloud_front" {
   s3_bucket_id        = module.s3_front_end.bucket_id
   s3_bucket_arn       = module.s3_front_end.bucket_arn
   aliase_domain       = var.domain
+}
+
+module "codegenie-api" {
+  source      = "../../modules/lambda-node-api"
+  env         = local.env
+  project     = local.project
+  bucket_name = "${local.project}-${local.env}-api-bucket"
+  owner       = local.owner
 }
