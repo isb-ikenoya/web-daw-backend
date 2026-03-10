@@ -1,0 +1,23 @@
+properties:
+  version:
+    type: string
+    title: Version
+    description: エンジンのバージョン名
+  descriptions:
+    items:
+      type: string
+    type: array
+    title: Descriptions
+    description: アップデートの詳細についての説明
+  contributors:
+    items:
+      type: string
+    type: array
+    title: Contributors
+    description: 貢献者名
+type: object
+required:
+  - version
+  - descriptions
+title: UpdateInfo
+description: エンジンのアップデート情報。

@@ -1,0 +1,21 @@
+properties:
+  phoneme:
+    type: string
+    title: Phoneme
+    description: 音素
+  frame_length:
+    type: integer
+    title: Frame Length
+    description: 音素のフレーム長
+  note_id:
+    anyOf:
+      - type: string
+      - type: 'null'
+    title: Note Id
+    description: 音符のID
+type: object
+required:
+  - phoneme
+  - frame_length
+title: FramePhoneme
+description: 音素の情報。

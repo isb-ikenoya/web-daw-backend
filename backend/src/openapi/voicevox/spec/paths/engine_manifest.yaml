@@ -1,0 +1,13 @@
+get:
+  tags:
+    - other
+  summary: Engine Manifest
+  description: エンジンマニフェストを取得します。
+  operationId: engine_manifest
+  responses:
+    '200':
+      description: Successful Response
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/EngineManifest.yaml

@@ -1,0 +1,24 @@
+post:
+  tags:
+    - other
+  summary: Delete Preset
+  description: 既存のプリセットを削除します。
+  operationId: delete_preset
+  parameters:
+    - name: id
+      in: query
+      required: true
+      schema:
+        type: integer
+        description: 削除するプリセットのプリセットID
+        title: Id
+      description: 削除するプリセットのプリセットID
+  responses:
+    '204':
+      description: Successful Response
+    '422':
+      description: Validation Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/HTTPValidationError.yaml

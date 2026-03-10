@@ -1,0 +1,12 @@
+properties:
+  notes:
+    items:
+      $ref: ./Note.yaml
+    type: array
+    title: Notes
+    description: 音符のリスト
+type: object
+required:
+  - notes
+title: Score
+description: 楽譜情報。

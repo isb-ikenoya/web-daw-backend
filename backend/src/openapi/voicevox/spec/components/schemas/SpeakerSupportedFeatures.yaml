@@ -1,0 +1,13 @@
+properties:
+  permitted_synthesis_morphing:
+    type: string
+    enum:
+      - ALL
+      - SELF_ONLY
+      - NOTHING
+    title: Permitted Synthesis Morphing
+    description: モーフィング機能への対応。'ALL' は「全て許可」、'SELF_ONLY' は「同じキャラクター内でのみ許可」、'NOTHING' は「全て禁止」
+    default: ALL
+type: object
+title: SpeakerSupportedFeatures
+description: キャラクターの対応機能の情報

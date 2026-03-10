@@ -1,0 +1,10 @@
+properties:
+  score:
+    $ref: ./Score.yaml
+  frame_audio_query:
+    $ref: ./FrameAudioQuery.yaml
+type: object
+required:
+  - score
+  - frame_audio_query
+title: Body_sing_frame_volume_sing_frame_volume_post

@@ -1,0 +1,27 @@
+post:
+  tags:
+    - other
+  summary: Update Preset
+  description: 既存のプリセットを更新します。
+  operationId: update_preset
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Preset.yaml
+          description: 更新するプリセット。プリセットIDが更新対象と一致している必要があります。
+    required: true
+  responses:
+    '200':
+      description: 更新したプリセットのプリセットID
+      content:
+        application/json:
+          schema:
+            type: integer
+            title: Response Update Preset Update Preset Post
+    '422':
+      description: Validation Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/HTTPValidationError.yaml

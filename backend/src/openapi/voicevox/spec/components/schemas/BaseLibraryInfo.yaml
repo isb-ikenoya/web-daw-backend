@@ -1,0 +1,37 @@
+description: 音声ライブラリの情報。
+properties:
+  name:
+    description: 音声ライブラリの名前
+    title: Name
+    type: string
+  uuid:
+    description: 音声ライブラリのUUID
+    title: Uuid
+    type: string
+  version:
+    description: 音声ライブラリのバージョン
+    title: Version
+    type: string
+  download_url:
+    description: 音声ライブラリのダウンロードURL
+    title: Download Url
+    type: string
+  bytes:
+    description: 音声ライブラリのバイト数
+    title: Bytes
+    type: integer
+  speakers:
+    description: 音声ライブラリに含まれるキャラクターのリスト
+    items:
+      $ref: ./LibrarySpeaker.yaml
+    title: Speakers
+    type: array
+required:
+  - name
+  - uuid
+  - version
+  - download_url
+  - bytes
+  - speakers
+title: BaseLibraryInfo
+type: object

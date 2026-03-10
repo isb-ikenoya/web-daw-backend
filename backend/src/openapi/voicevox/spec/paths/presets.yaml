@@ -1,0 +1,16 @@
+get:
+  tags:
+    - other
+  summary: Get Presets
+  description: エンジンが保持しているプリセットの設定を返します。
+  operationId: get_presets
+  responses:
+    '200':
+      description: プリセットのリスト
+      content:
+        application/json:
+          schema:
+            items:
+              $ref: ../components/schemas/Preset.yaml
+            type: array
+            title: Response Get Presets Presets Get

@@ -1,0 +1,38 @@
+post:
+  tags:
+    - other
+  summary: テキストがAquesTalk 風記法に従っているか判定する
+  description: |-
+    テキストがAquesTalk 風記法に従っているかどうかを判定します。
+
+    従っていない場合はエラーが返ります。
+  operationId: validate_kana
+  parameters:
+    - name: text
+      in: query
+      required: true
+      schema:
+        type: string
+        description: 判定する対象の文字列
+        title: Text
+      description: 判定する対象の文字列
+  responses:
+    '200':
+      description: Successful Response
+      content:
+        application/json:
+          schema:
+            type: boolean
+            title: Response Validate Kana Validate Kana Post
+    '400':
+      description: テキストが不正です
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ParseKanaBadRequest.yaml
+    '422':
+      description: Validation Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/HTTPValidationError.yaml

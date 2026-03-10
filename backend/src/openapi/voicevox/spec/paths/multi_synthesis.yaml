@@ -1,0 +1,50 @@
+post:
+  tags:
+    - speech_synthesis
+  summary: 複数まとめて音声合成する
+  operationId: multi_synthesis
+  parameters:
+    - name: speaker
+      in: query
+      required: true
+      schema:
+        type: integer
+        title: Speaker
+    - name: enable_interrogative_upspeak
+      in: query
+      required: false
+      schema:
+        type: boolean
+        description: 疑問系のテキストが与えられたら語尾を自動調整する
+        default: true
+        title: Enable Interrogative Upspeak
+      description: 疑問系のテキストが与えられたら語尾を自動調整する
+    - name: core_version
+      in: query
+      required: false
+      schema:
+        type: string
+        title: Core Version
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: ../components/schemas/AudioQuery.yaml
+          title: Queries
+  responses:
+    '200':
+      description: Successful Response
+      content:
+        application/zip:
+          schema:
+            type: string
+            format: binary
+    '422':
+      description: Validation Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/HTTPValidationError.yaml

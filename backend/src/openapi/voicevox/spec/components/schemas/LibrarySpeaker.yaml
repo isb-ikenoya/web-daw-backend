@@ -1,0 +1,11 @@
+properties:
+  speaker:
+    $ref: ./Speaker.yaml
+  speaker_info:
+    $ref: ./SpeakerInfo.yaml
+type: object
+required:
+  - speaker
+  - speaker_info
+title: LibrarySpeaker
+description: 音声ライブラリに含まれるキャラクターの情報。

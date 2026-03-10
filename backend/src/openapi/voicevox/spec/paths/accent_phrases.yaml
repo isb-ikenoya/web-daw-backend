@@ -1,0 +1,71 @@
+post:
+  tags:
+    - edit_query
+  summary: テキストからアクセント句を得る
+  description: |-
+    テキストからアクセント句を得ます。
+
+    is_kanaが`true`のとき、テキストは次のAquesTalk 風記法で解釈されます。デフォルトは`false`です。
+    * 全てのカナはカタカナで記述される
+    * アクセント句は`/`または`、`で区切る。`、`で区切った場合に限り無音区間が挿入される。
+    * カナの手前に`_`を入れるとそのカナは無声化される
+    * アクセント位置を`'`で指定する。全てのアクセント句にはアクセント位置を1つ指定する必要がある。
+    * アクセント句末に`？`(全角)を入れることにより疑問文の発音ができる。
+    enable_katakana_englishが`true`のとき、テキスト中の読みが不明な英単語をカタカナ読みにします。デフォルトは`true`です。
+    is_kanaが`true`のとき、enable_katakana_englishの値は無視されます。
+  operationId: accent_phrases
+  parameters:
+    - name: text
+      in: query
+      required: true
+      schema:
+        type: string
+        title: Text
+    - name: speaker
+      in: query
+      required: true
+      schema:
+        type: integer
+        title: Speaker
+    - name: is_kana
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: false
+        title: Is Kana
+    - name: enable_katakana_english
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: true
+        title: Enable Katakana English
+    - name: core_version
+      in: query
+      required: false
+      schema:
+        type: string
+        title: Core Version
+  responses:
+    '200':
+      description: Successful Response
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../components/schemas/AccentPhrase.yaml
+            title: Response Accent Phrases Accent Phrases Post
+    '400':
+      description: 読み仮名のパースに失敗
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ParseKanaBadRequest.yaml
+    '422':
+      description: Validation Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/HTTPValidationError.yaml

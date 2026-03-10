@@ -1,0 +1,25 @@
+properties:
+  id:
+    anyOf:
+      - type: string
+      - type: 'null'
+    title: Id
+    description: ID
+  key:
+    type: integer
+    title: Key
+    description: 音階
+  frame_length:
+    type: integer
+    title: Frame Length
+    description: 音符のフレーム長
+  lyric:
+    type: string
+    title: Lyric
+    description: 音符の歌詞
+type: object
+required:
+  - frame_length
+  - lyric
+title: Note
+description: 音符ごとの情報。

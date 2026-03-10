@@ -1,0 +1,26 @@
+get:
+  tags:
+    - other
+  summary: Supported Devices
+  description: 対応デバイスの一覧を取得します。
+  operationId: supported_devices
+  parameters:
+    - name: core_version
+      in: query
+      required: false
+      schema:
+        type: string
+        title: Core Version
+  responses:
+    '200':
+      description: Successful Response
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/SupportedDevicesInfo.yaml
+    '422':
+      description: Validation Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/HTTPValidationError.yaml

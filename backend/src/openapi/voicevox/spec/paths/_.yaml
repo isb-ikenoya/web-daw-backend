@@ -1,0 +1,13 @@
+get:
+  tags:
+    - other
+  summary: Get Portal Page
+  description: ポータルページを返します。
+  operationId: get_portal_page
+  responses:
+    '200':
+      description: Successful Response
+      content:
+        text/html:
+          schema:
+            type: string

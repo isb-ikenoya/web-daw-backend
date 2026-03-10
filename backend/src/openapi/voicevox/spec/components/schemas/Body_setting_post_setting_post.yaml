@@ -1,0 +1,10 @@
+properties:
+  cors_policy_mode:
+    $ref: ./CorsPolicyMode.yaml
+  allow_origin:
+    type: string
+    title: Allow Origin
+type: object
+required:
+  - cors_policy_mode
+title: Body_setting_post_setting_post

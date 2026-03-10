@@ -1,0 +1,33 @@
+get:
+  tags:
+    - other
+  summary: Is Initialized Speaker
+  description: 指定されたスタイルが初期化されているかどうかを返します。
+  operationId: is_initialized_speaker
+  parameters:
+    - name: speaker
+      in: query
+      required: true
+      schema:
+        type: integer
+        title: Speaker
+    - name: core_version
+      in: query
+      required: false
+      schema:
+        type: string
+        title: Core Version
+  responses:
+    '200':
+      description: Successful Response
+      content:
+        application/json:
+          schema:
+            type: boolean
+            title: Response Is Initialized Speaker Is Initialized Speaker Get
+    '422':
+      description: Validation Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/HTTPValidationError.yaml

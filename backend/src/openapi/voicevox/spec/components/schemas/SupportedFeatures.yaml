@@ -1,0 +1,65 @@
+properties:
+  adjust_mora_pitch:
+    type: boolean
+    title: Adjust Mora Pitch
+    description: モーラごとの音高の調整
+  adjust_phoneme_length:
+    type: boolean
+    title: Adjust Phoneme Length
+    description: 音素ごとの長さの調整
+  adjust_speed_scale:
+    type: boolean
+    title: Adjust Speed Scale
+    description: 全体の話速の調整
+  adjust_pitch_scale:
+    type: boolean
+    title: Adjust Pitch Scale
+    description: 全体の音高の調整
+  adjust_intonation_scale:
+    type: boolean
+    title: Adjust Intonation Scale
+    description: 全体の抑揚の調整
+  adjust_volume_scale:
+    type: boolean
+    title: Adjust Volume Scale
+    description: 全体の音量の調整
+  adjust_pause_length:
+    type: boolean
+    title: Adjust Pause Length
+    description: 句読点などの無音時間の調整
+  interrogative_upspeak:
+    type: boolean
+    title: Interrogative Upspeak
+    description: 疑問文の自動調整
+  synthesis_morphing:
+    type: boolean
+    title: Synthesis Morphing
+    description: 2種類のスタイルでモーフィングした音声を合成
+  sing:
+    type: boolean
+    title: Sing
+    description: 歌唱音声合成
+  manage_library:
+    type: boolean
+    title: Manage Library
+    description: 音声ライブラリのインストール・アンインストール
+  return_resource_url:
+    type: boolean
+    title: Return Resource Url
+    description: キャラクター情報のリソースをURLで返送
+  apply_katakana_english:
+    type: boolean
+    title: Apply Katakana English
+    description: 未知の英単語をカタカナ読みに変換
+type: object
+required:
+  - adjust_mora_pitch
+  - adjust_phoneme_length
+  - adjust_speed_scale
+  - adjust_pitch_scale
+  - adjust_intonation_scale
+  - adjust_volume_scale
+  - interrogative_upspeak
+  - synthesis_morphing
+title: SupportedFeatures
+description: エンジンが持つ機能の一覧。

@@ -1,0 +1,42 @@
+properties:
+  name:
+    type: string
+    title: Name
+    description: 音声ライブラリの名前
+  uuid:
+    type: string
+    title: Uuid
+    description: 音声ライブラリのUUID
+  version:
+    type: string
+    title: Version
+    description: 音声ライブラリのバージョン
+  download_url:
+    type: string
+    title: Download Url
+    description: 音声ライブラリのダウンロードURL
+  bytes:
+    type: integer
+    title: Bytes
+    description: 音声ライブラリのバイト数
+  speakers:
+    items:
+      $ref: ./LibrarySpeaker.yaml
+    type: array
+    title: Speakers
+    description: 音声ライブラリに含まれるキャラクターのリスト
+  uninstallable:
+    type: boolean
+    title: Uninstallable
+    description: アンインストール可能かどうか
+type: object
+required:
+  - name
+  - uuid
+  - version
+  - download_url
+  - bytes
+  - speakers
+  - uninstallable
+title: InstalledLibraryInfo
+description: インストール済み音声ライブラリの情報。

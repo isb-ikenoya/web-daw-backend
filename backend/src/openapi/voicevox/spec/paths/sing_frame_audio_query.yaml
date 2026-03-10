@@ -1,0 +1,38 @@
+post:
+  tags:
+    - create_query
+  summary: 歌唱音声合成用のクエリを作成する
+  description: 歌唱音声合成用のクエリの初期値を得ます。ここで得られたクエリはそのまま歌唱音声合成に利用できます。各値の意味は`Schemas`を参照してください。
+  operationId: sing_frame_audio_query
+  parameters:
+    - name: speaker
+      in: query
+      required: true
+      schema:
+        type: integer
+        title: Speaker
+    - name: core_version
+      in: query
+      required: false
+      schema:
+        type: string
+        title: Core Version
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Score.yaml
+  responses:
+    '200':
+      description: Successful Response
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/FrameAudioQuery.yaml
+    '422':
+      description: Validation Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/HTTPValidationError.yaml

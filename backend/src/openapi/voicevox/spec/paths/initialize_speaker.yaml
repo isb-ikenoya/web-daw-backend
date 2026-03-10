@@ -1,0 +1,40 @@
+post:
+  tags:
+    - other
+  summary: Initialize Speaker
+  description: |-
+    指定されたスタイルを初期化します。
+
+    実行しなくても他のAPIは使用できますが、初回実行時に時間がかかることがあります。
+  operationId: initialize_speaker
+  parameters:
+    - name: speaker
+      in: query
+      required: true
+      schema:
+        type: integer
+        title: Speaker
+    - name: skip_reinit
+      in: query
+      required: false
+      schema:
+        type: boolean
+        description: 既に初期化済みのスタイルの再初期化をスキップするかどうか
+        default: false
+        title: Skip Reinit
+      description: 既に初期化済みのスタイルの再初期化をスキップするかどうか
+    - name: core_version
+      in: query
+      required: false
+      schema:
+        type: string
+        title: Core Version
+  responses:
+    '204':
+      description: Successful Response
+    '422':
+      description: Validation Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/HTTPValidationError.yaml

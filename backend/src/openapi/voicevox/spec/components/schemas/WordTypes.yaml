@@ -1,0 +1,9 @@
+type: string
+enum:
+  - PROPER_NOUN
+  - COMMON_NOUN
+  - VERB
+  - ADJECTIVE
+  - SUFFIX
+title: WordTypes
+description: 品詞

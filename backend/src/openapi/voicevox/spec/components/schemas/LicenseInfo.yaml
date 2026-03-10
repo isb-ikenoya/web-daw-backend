@@ -1,0 +1,23 @@
+properties:
+  name:
+    type: string
+    title: Name
+    description: 依存ライブラリ名
+  version:
+    type: string
+    title: Version
+    description: 依存ライブラリのバージョン
+  license:
+    type: string
+    title: License
+    description: 依存ライブラリのライセンス名
+  text:
+    type: string
+    title: Text
+    description: 依存ライブラリのライセンス本文
+type: object
+required:
+  - name
+  - text
+title: LicenseInfo
+description: 依存ライブラリのライセンス情報。

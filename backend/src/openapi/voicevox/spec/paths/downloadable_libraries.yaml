@@ -1,0 +1,16 @@
+get:
+  tags:
+    - music_library_management
+  summary: Downloadable Libraries
+  description: ダウンロード可能な音声ライブラリの情報を返します。
+  operationId: downloadable_libraries
+  responses:
+    '200':
+      description: ダウンロード可能な音声ライブラリの情報リスト
+      content:
+        application/json:
+          schema:
+            items:
+              $ref: ../components/schemas/DownloadableLibraryInfo.yaml
+            type: array
+            title: Response Downloadable Libraries Downloadable Libraries Get

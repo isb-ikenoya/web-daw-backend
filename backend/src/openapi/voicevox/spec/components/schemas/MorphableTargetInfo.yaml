@@ -1,0 +1,10 @@
+properties:
+  is_morphable:
+    type: boolean
+    title: Is Morphable
+    description: 指定したキャラクターに対してモーフィングの可否
+type: object
+required:
+  - is_morphable
+title: MorphableTargetInfo
+description: モーフィング相手としての情報。

@@ -1,0 +1,30 @@
+properties:
+  name:
+    type: string
+    title: Name
+    description: 名前
+  speaker_uuid:
+    type: string
+    title: Speaker Uuid
+    description: キャラクターのUUID
+  styles:
+    items:
+      $ref: ./SpeakerStyle.yaml
+    type: array
+    title: Styles
+    description: スタイルの一覧
+  version:
+    type: string
+    title: Version
+    description: キャラクターのバージョン
+  supported_features:
+    $ref: ./SpeakerSupportedFeatures.yaml
+    description: キャラクターの対応機能
+type: object
+required:
+  - name
+  - speaker_uuid
+  - styles
+  - version
+title: Speaker
+description: キャラクター情報

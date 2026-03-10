@@ -1,0 +1,26 @@
+properties:
+  moras:
+    items:
+      $ref: ./Mora.yaml
+    type: array
+    title: Moras
+    description: モーラのリスト
+  accent:
+    type: integer
+    title: Accent
+    description: アクセント箇所
+  pause_mora:
+    $ref: ./Mora.yaml
+    title: Pause Mora
+    description: アクセント句の末尾につく無音モーラ。null の場合は無音モーラを付けない。
+  is_interrogative:
+    type: boolean
+    title: Is Interrogative
+    description: 疑問系かどうか
+    default: false
+type: object
+required:
+  - moras
+  - accent
+title: AccentPhrase
+description: アクセント句ごとの情報。

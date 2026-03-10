@@ -1,0 +1,27 @@
+post:
+  tags:
+    - other
+  summary: Add Preset
+  description: 新しいプリセットを追加します。
+  operationId: add_preset
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Preset.yaml
+          description: 新しいプリセット。プリセットIDが既存のものと重複している場合は、新規のプリセットIDが採番されます。
+    required: true
+  responses:
+    '200':
+      description: 追加したプリセットのプリセットID
+      content:
+        application/json:
+          schema:
+            type: integer
+            title: Response Add Preset Add Preset Post
+    '422':
+      description: Validation Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/HTTPValidationError.yaml

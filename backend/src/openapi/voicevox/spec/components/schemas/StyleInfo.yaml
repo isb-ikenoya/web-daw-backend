@@ -1,0 +1,26 @@
+properties:
+  id:
+    type: integer
+    title: Id
+    description: スタイルID
+  icon:
+    type: string
+    title: Icon
+    description: このスタイルのアイコンをbase64エンコードしたもの、あるいはURL
+  portrait:
+    type: string
+    title: Portrait
+    description: このスタイルの立ち絵画像をbase64エンコードしたもの、あるいはURL
+  voice_samples:
+    items:
+      type: string
+    type: array
+    title: Voice Samples
+    description: サンプル音声をbase64エンコードしたもの、あるいはURL
+type: object
+required:
+  - id
+  - icon
+  - voice_samples
+title: StyleInfo
+description: スタイルの追加情報

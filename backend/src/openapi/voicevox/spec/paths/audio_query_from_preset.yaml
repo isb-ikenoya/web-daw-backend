@@ -1,0 +1,45 @@
+post:
+  tags:
+    - create_query
+  summary: 音声合成用のクエリをプリセットを用いて作成する
+  description: 音声合成用のクエリの初期値を得ます。ここで得られたクエリはそのまま音声合成に利用できます。各値の意味は`Schemas`を参照してください。
+  operationId: audio_query_from_preset
+  parameters:
+    - name: text
+      in: query
+      required: true
+      schema:
+        type: string
+        title: Text
+    - name: preset_id
+      in: query
+      required: true
+      schema:
+        type: integer
+        title: Preset Id
+    - name: enable_katakana_english
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: true
+        title: Enable Katakana English
+    - name: core_version
+      in: query
+      required: false
+      schema:
+        type: string
+        title: Core Version
+  responses:
+    '200':
+      description: Successful Response
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/AudioQuery.yaml
+    '422':
+      description: Validation Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/HTTPValidationError.yaml

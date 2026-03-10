@@ -1,0 +1,33 @@
+properties:
+  text:
+    type: string
+    title: Text
+    description: 文字
+  consonant:
+    type: string
+    title: Consonant
+    description: 子音の音素
+  consonant_length:
+    type: number
+    title: Consonant Length
+    description: 子音の長さ
+  vowel:
+    type: string
+    title: Vowel
+    description: 母音の音素
+  vowel_length:
+    type: number
+    title: Vowel Length
+    description: 母音の長さ
+  pitch:
+    type: number
+    title: Pitch
+    description: 音高
+type: object
+required:
+  - text
+  - vowel
+  - vowel_length
+  - pitch
+title: Mora
+description: モーラ（子音＋母音）ごとの情報。

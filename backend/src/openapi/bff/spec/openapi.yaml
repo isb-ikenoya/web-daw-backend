@@ -1,0 +1,16 @@
+openapi: 3.0.3
+servers:
+  - url: https://dev.sample-server.com/v1
+    description: Development server
+security: []
+info:
+  title: VOICEVOX BFF
+  description: VOICEVOXのBFF
+  license:
+    name: All Rights Reserved
+    url: https://github.com/ikesan5656/voicevox-bff-api/blob/develop/README.md
+
+  version: latest
+paths:
+  /talk_synthesis:
+    $ref: paths/talk_synthesis.yaml

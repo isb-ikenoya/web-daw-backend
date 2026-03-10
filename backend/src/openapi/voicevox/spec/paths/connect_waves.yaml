@@ -1,0 +1,29 @@
+post:
+  tags:
+    - other
+  summary: base64エンコードされた複数のwavデータを一つに結合する
+  description: base64エンコードされたwavデータを一纏めにし、wavファイルで返します。
+  operationId: connect_waves
+  requestBody:
+    content:
+      application/json:
+        schema:
+          items:
+            type: string
+          type: array
+          title: Waves
+    required: true
+  responses:
+    '200':
+      description: Successful Response
+      content:
+        audio/wav:
+          schema:
+            type: string
+            format: binary
+    '422':
+      description: Validation Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/HTTPValidationError.yaml

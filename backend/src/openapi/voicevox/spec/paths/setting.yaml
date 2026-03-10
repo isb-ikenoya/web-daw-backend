@@ -1,0 +1,30 @@
+get:
+  tags:
+    - setting
+  summary: Setting Get
+  description: 設定ページを返します。
+  operationId: setting_get
+  responses:
+    '200':
+      description: Successful Response
+post:
+  tags:
+    - setting
+  summary: Setting Post
+  description: 設定を更新します。
+  operationId: setting_post
+  requestBody:
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          $ref: ../components/schemas/Body_setting_post_setting_post.yaml
+    required: true
+  responses:
+    '204':
+      description: Successful Response
+    '422':
+      description: Validation Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/HTTPValidationError.yaml

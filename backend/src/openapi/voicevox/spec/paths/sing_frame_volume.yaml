@@ -1,0 +1,41 @@
+post:
+  tags:
+    - edit_query
+  summary: 楽譜・歌唱音声合成用のクエリからフレームごとの音量を得る
+  operationId: sing_frame_volume
+  parameters:
+    - name: speaker
+      in: query
+      required: true
+      schema:
+        type: integer
+        title: Speaker
+    - name: core_version
+      in: query
+      required: false
+      schema:
+        type: string
+        title: Core Version
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: >-
+            ../components/schemas/Body_sing_frame_volume_sing_frame_volume_post.yaml
+  responses:
+    '200':
+      description: Successful Response
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: number
+            title: Response Sing Frame Volume Sing Frame Volume Post
+    '422':
+      description: Validation Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/HTTPValidationError.yaml

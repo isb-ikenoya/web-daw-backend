@@ -1,0 +1,14 @@
+get:
+  tags:
+    - other
+  summary: Version
+  description: エンジンのバージョンを取得します。
+  operationId: version
+  responses:
+    '200':
+      description: Successful Response
+      content:
+        application/json:
+          schema:
+            type: string
+            title: Response Version Version Get

@@ -1,0 +1,65 @@
+post:
+  tags:
+    - speech_synthesis
+  summary: 2種類のスタイルでモーフィングした音声を合成する
+  description: |-
+    指定された2種類のスタイルで音声を合成、指定した割合でモーフィングした音声を得ます。
+
+    モーフィングの割合は`morph_rate`で指定でき、0.0でベースのスタイル、1.0でターゲットのスタイルに近づきます。
+  operationId: _synthesis_morphing
+  parameters:
+    - name: base_speaker
+      in: query
+      required: true
+      schema:
+        type: integer
+        title: Base Speaker
+    - name: target_speaker
+      in: query
+      required: true
+      schema:
+        type: integer
+        title: Target Speaker
+    - name: morph_rate
+      in: query
+      required: true
+      schema:
+        type: number
+        maximum: 1
+        minimum: 0
+        title: Morph Rate
+    - name: enable_interrogative_upspeak
+      in: query
+      required: false
+      schema:
+        type: boolean
+        description: 疑問系のテキストが与えられたら語尾を自動調整する
+        default: true
+        title: Enable Interrogative Upspeak
+      description: 疑問系のテキストが与えられたら語尾を自動調整する
+    - name: core_version
+      in: query
+      required: false
+      schema:
+        type: string
+        title: Core Version
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/AudioQuery.yaml
+  responses:
+    '200':
+      description: Successful Response
+      content:
+        audio/wav:
+          schema:
+            type: string
+            format: binary
+    '422':
+      description: Validation Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/HTTPValidationError.yaml

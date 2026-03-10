@@ -1,0 +1,26 @@
+properties:
+  name:
+    type: string
+    title: Name
+    description: スタイル名
+  id:
+    type: integer
+    title: Id
+    description: スタイルID
+  type:
+    type: string
+    enum:
+      - talk
+      - singing_teacher
+      - frame_decode
+      - sing
+    title: Type
+    description: >-
+      スタイルの種類。talk:音声合成クエリの作成と音声合成が可能。singing_teacher:歌唱音声合成用のクエリの作成が可能。frame_decode:歌唱音声合成が可能。sing:歌唱音声合成用のクエリの作成と歌唱音声合成が可能。
+    default: talk
+type: object
+required:
+  - name
+  - id
+title: SpeakerStyle
+description: キャラクターのスタイル情報

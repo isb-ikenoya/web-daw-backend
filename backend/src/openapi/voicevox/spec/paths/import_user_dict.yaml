@@ -1,0 +1,34 @@
+post:
+  tags:
+    - user_dict_word
+  summary: Import User Dict Words
+  description: 他のユーザー辞書をインポートします。
+  operationId: import_user_dict_words
+  parameters:
+    - name: override
+      in: query
+      required: true
+      schema:
+        type: boolean
+        description: 重複したエントリがあった場合、上書きするかどうか
+        title: Override
+      description: 重複したエントリがあった場合、上書きするかどうか
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          additionalProperties:
+            $ref: ../components/schemas/UserDictWord.yaml
+          description: インポートするユーザー辞書のデータ
+          title: Import Dict Data
+  responses:
+    '204':
+      description: Successful Response
+    '422':
+      description: Validation Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/HTTPValidationError.yaml

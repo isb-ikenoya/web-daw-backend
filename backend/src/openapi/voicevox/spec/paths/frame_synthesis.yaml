@@ -1,0 +1,39 @@
+post:
+  tags:
+    - speech_synthesis
+  summary: Frame Synthesis
+  description: 歌唱音声合成を行います。
+  operationId: frame_synthesis
+  parameters:
+    - name: speaker
+      in: query
+      required: true
+      schema:
+        type: integer
+        title: Speaker
+    - name: core_version
+      in: query
+      required: false
+      schema:
+        type: string
+        title: Core Version
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/FrameAudioQuery.yaml
+  responses:
+    '200':
+      description: Successful Response
+      content:
+        audio/wav:
+          schema:
+            type: string
+            format: binary
+    '422':
+      description: Validation Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/HTTPValidationError.yaml

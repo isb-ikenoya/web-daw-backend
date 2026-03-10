@@ -1,0 +1,19 @@
+get:
+  tags:
+    - user_dict_word
+  summary: Get User Dict Words
+  description: |-
+    ユーザー辞書に登録されている単語の一覧を返します。
+
+    単語の表層形(surface)は正規化済みの物を返します。
+  operationId: get_user_dict_words
+  responses:
+    '200':
+      description: 単語のUUIDとその詳細
+      content:
+        application/json:
+          schema:
+            additionalProperties:
+              $ref: ../components/schemas/UserDictWord.yaml
+            type: object
+            title: Response Get User Dict Words User Dict Get

@@ -1,0 +1,48 @@
+post:
+  tags:
+    - speech_synthesis
+  summary: 指定したスタイルに対してエンジン内のキャラクターがモーフィングが可能か判定する
+  description: >-
+    指定されたベーススタイルに対してエンジン内の各キャラクターがモーフィング機能を利用可能か返します。
+
+
+    モーフィングの許可/禁止は`/speakers`の`speaker.supported_features.synthesis_morphing`に記載されています。
+
+    プロパティが存在しない場合は、モーフィングが許可されているとみなします。
+
+    返り値のスタイルIDはstring型なので注意。
+  operationId: morphable_targets
+  parameters:
+    - name: core_version
+      in: query
+      required: false
+      schema:
+        type: string
+        title: Core Version
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            type: integer
+          title: Base Style Ids
+  responses:
+    '200':
+      description: Successful Response
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              additionalProperties:
+                $ref: ../components/schemas/MorphableTargetInfo.yaml
+            title: Response Morphable Targets Morphable Targets Post
+    '422':
+      description: Validation Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/HTTPValidationError.yaml

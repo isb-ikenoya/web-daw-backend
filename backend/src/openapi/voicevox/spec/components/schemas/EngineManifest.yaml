@@ -1,0 +1,72 @@
+properties:
+  manifest_version:
+    type: string
+    title: Manifest Version
+    description: マニフェストのバージョン
+  name:
+    type: string
+    title: Name
+    description: エンジン名
+  brand_name:
+    type: string
+    title: Brand Name
+    description: ブランド名
+  uuid:
+    type: string
+    title: Uuid
+    description: エンジンのUUID
+  url:
+    type: string
+    title: Url
+    description: エンジンのURL
+  icon:
+    type: string
+    title: Icon
+    description: エンジンのアイコンをBASE64エンコードしたもの
+  default_sampling_rate:
+    type: integer
+    title: Default Sampling Rate
+    description: デフォルトのサンプリング周波数
+  frame_rate:
+    type: number
+    title: Frame Rate
+    description: エンジンのフレームレート
+  terms_of_service:
+    type: string
+    title: Terms Of Service
+    description: エンジンの利用規約
+  update_infos:
+    items:
+      $ref: ./UpdateInfo.yaml
+    type: array
+    title: Update Infos
+    description: エンジンのアップデート情報
+  dependency_licenses:
+    items:
+      $ref: ./LicenseInfo.yaml
+    type: array
+    title: Dependency Licenses
+    description: 依存関係のライセンス情報
+  supported_vvlib_manifest_version:
+    type: string
+    title: Supported Vvlib Manifest Version
+    description: エンジンが対応するvvlibのバージョン
+  supported_features:
+    $ref: ./SupportedFeatures.yaml
+    description: エンジンが持つ機能
+type: object
+required:
+  - manifest_version
+  - name
+  - brand_name
+  - uuid
+  - url
+  - icon
+  - default_sampling_rate
+  - frame_rate
+  - terms_of_service
+  - update_infos
+  - dependency_licenses
+  - supported_features
+title: EngineManifest
+description: エンジン自体に関する情報。

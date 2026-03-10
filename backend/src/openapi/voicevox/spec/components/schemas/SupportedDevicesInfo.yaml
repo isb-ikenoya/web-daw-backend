@@ -1,0 +1,20 @@
+properties:
+  cpu:
+    type: boolean
+    title: Cpu
+    description: CPUに対応しているか
+  cuda:
+    type: boolean
+    title: Cuda
+    description: CUDA(Nvidia GPU)に対応しているか
+  dml:
+    type: boolean
+    title: Dml
+    description: DirectML(Nvidia GPU/Radeon GPU等)に対応しているか
+type: object
+required:
+  - cpu
+  - cuda
+  - dml
+title: SupportedDevicesInfo
+description: 対応しているデバイスの情報。

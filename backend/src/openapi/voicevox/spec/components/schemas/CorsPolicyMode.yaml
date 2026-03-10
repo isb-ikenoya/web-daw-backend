@@ -1,0 +1,6 @@
+type: string
+enum:
+  - all
+  - localapps
+title: CorsPolicyMode
+description: CORSの許可モード。

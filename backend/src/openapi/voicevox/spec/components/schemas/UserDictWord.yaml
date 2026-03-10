@@ -1,0 +1,81 @@
+properties:
+  surface:
+    type: string
+    title: Surface
+    description: 表層形
+  priority:
+    type: integer
+    maximum: 10
+    minimum: 0
+    title: Priority
+    description: 優先度
+  context_id:
+    type: integer
+    title: Context Id
+    description: 文脈ID
+    default: 1348
+  part_of_speech:
+    type: string
+    title: Part Of Speech
+    description: 品詞
+  part_of_speech_detail_1:
+    type: string
+    title: Part Of Speech Detail 1
+    description: 品詞細分類1
+  part_of_speech_detail_2:
+    type: string
+    title: Part Of Speech Detail 2
+    description: 品詞細分類2
+  part_of_speech_detail_3:
+    type: string
+    title: Part Of Speech Detail 3
+    description: 品詞細分類3
+  inflectional_type:
+    type: string
+    title: Inflectional Type
+    description: 活用型
+  inflectional_form:
+    type: string
+    title: Inflectional Form
+    description: 活用形
+  stem:
+    type: string
+    title: Stem
+    description: 原形
+  yomi:
+    type: string
+    title: Yomi
+    description: 読み
+  pronunciation:
+    type: string
+    title: Pronunciation
+    description: 発音
+  accent_type:
+    type: integer
+    title: Accent Type
+    description: アクセント型
+  mora_count:
+    type: integer
+    title: Mora Count
+    description: モーラ数
+  accent_associative_rule:
+    type: string
+    title: Accent Associative Rule
+    description: アクセント結合規則
+type: object
+required:
+  - surface
+  - priority
+  - part_of_speech
+  - part_of_speech_detail_1
+  - part_of_speech_detail_2
+  - part_of_speech_detail_3
+  - inflectional_type
+  - inflectional_form
+  - stem
+  - yomi
+  - pronunciation
+  - accent_type
+  - accent_associative_rule
+title: UserDictWord
+description: 辞書のコンパイルに使われる情報。

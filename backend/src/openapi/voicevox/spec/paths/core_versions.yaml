@@ -1,0 +1,16 @@
+get:
+  tags:
+    - other
+  summary: Core Versions
+  description: 利用可能なコアのバージョン一覧を取得します。
+  operationId: core_versions
+  responses:
+    '200':
+      description: Successful Response
+      content:
+        application/json:
+          schema:
+            items:
+              type: string
+            type: array
+            title: Response Core Versions Core Versions Get

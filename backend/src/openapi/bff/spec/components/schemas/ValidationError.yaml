@@ -1,0 +1,12 @@
+title: ValidationError
+type: object
+properties:
+  msg:
+    type: string
+    title: Message
+  type:
+    type: string
+    title: Error Type
+required:
+  - msg
+  - type

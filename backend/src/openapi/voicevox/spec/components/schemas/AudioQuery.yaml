@@ -1,0 +1,67 @@
+properties:
+  accent_phrases:
+    items:
+      $ref: ./AccentPhrase.yaml
+    type: array
+    title: Accent Phrases
+    description: アクセント句のリスト
+  speedScale:
+    type: number
+    title: Speedscale
+    description: 全体の話速
+  pitchScale:
+    type: number
+    title: Pitchscale
+    description: 全体の音高
+  intonationScale:
+    type: number
+    title: Intonationscale
+    description: 全体の抑揚
+  volumeScale:
+    type: number
+    title: Volumescale
+    description: 全体の音量
+  prePhonemeLength:
+    type: number
+    title: Prephonemelength
+    description: 音声の前の無音時間
+  postPhonemeLength:
+    type: number
+    title: Postphonemelength
+    description: 音声の後の無音時間
+  pauseLength:
+    anyOf:
+      - type: number
+      - type: 'null'
+    title: Pauselength
+    description: 句読点などの無音時間。nullのときは無視される。デフォルト値はnull
+  pauseLengthScale:
+    type: number
+    title: Pauselengthscale
+    description: 句読点などの無音時間（倍率）。デフォルト値は1
+    default: 1
+  outputSamplingRate:
+    type: integer
+    title: Outputsamplingrate
+    description: 音声データの出力サンプリングレート
+  outputStereo:
+    type: boolean
+    title: Outputstereo
+    description: 音声データをステレオ出力するか否か
+  kana:
+    type: string
+    title: Kana
+    description: '[読み取り専用]AquesTalk 風記法によるテキスト。音声合成用のクエリとしては無視される'
+type: object
+required:
+  - accent_phrases
+  - speedScale
+  - pitchScale
+  - intonationScale
+  - volumeScale
+  - prePhonemeLength
+  - postPhonemeLength
+  - outputSamplingRate
+  - outputStereo
+title: AudioQuery
+description: 音声合成用のクエリ。

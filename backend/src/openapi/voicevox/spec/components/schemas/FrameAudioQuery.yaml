@@ -1,0 +1,41 @@
+properties:
+  f0:
+    items:
+      type: number
+    type: array
+    title: F0
+    description: フレームごとの基本周波数
+  volume:
+    items:
+      type: number
+    type: array
+    title: Volume
+    description: フレームごとの音量
+  phonemes:
+    items:
+      $ref: ./FramePhoneme.yaml
+    type: array
+    title: Phonemes
+    description: 音素のリスト
+  volumeScale:
+    type: number
+    title: Volumescale
+    description: 全体の音量
+  outputSamplingRate:
+    type: integer
+    title: Outputsamplingrate
+    description: 音声データの出力サンプリングレート
+  outputStereo:
+    type: boolean
+    title: Outputstereo
+    description: 音声データをステレオ出力するか否か
+type: object
+required:
+  - f0
+  - volume
+  - phonemes
+  - volumeScale
+  - outputSamplingRate
+  - outputStereo
+title: FrameAudioQuery
+description: フレームごとの音声合成用のクエリ。

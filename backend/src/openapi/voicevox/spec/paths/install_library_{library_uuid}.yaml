@@ -1,0 +1,27 @@
+post:
+  tags:
+    - music_library_management
+  summary: Install Library
+  description: |-
+    音声ライブラリをインストールします。
+
+    音声ライブラリのZIPファイルをリクエストボディとして送信してください。
+  operationId: install_library
+  parameters:
+    - name: library_uuid
+      in: path
+      required: true
+      schema:
+        type: string
+        description: 音声ライブラリのID
+        title: Library Uuid
+      description: 音声ライブラリのID
+  responses:
+    '204':
+      description: Successful Response
+    '422':
+      description: Validation Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/HTTPValidationError.yaml

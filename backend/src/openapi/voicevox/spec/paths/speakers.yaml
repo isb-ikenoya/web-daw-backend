@@ -1,0 +1,29 @@
+get:
+  tags:
+    - other
+  summary: Speakers
+  description: 喋れるキャラクターの情報の一覧を返します。
+  operationId: speakers
+  parameters:
+    - name: core_version
+      in: query
+      required: false
+      schema:
+        type: string
+        title: Core Version
+  responses:
+    '200':
+      description: Successful Response
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../components/schemas/Speaker.yaml
+            title: Response Speakers Speakers Get
+    '422':
+      description: Validation Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/HTTPValidationError.yaml

@@ -1,0 +1,22 @@
+properties:
+  policy:
+    type: string
+    title: Policy
+    description: policy.md
+  portrait:
+    type: string
+    title: Portrait
+    description: 立ち絵画像をbase64エンコードしたもの、あるいはURL
+  style_infos:
+    items:
+      $ref: ./StyleInfo.yaml
+    type: array
+    title: Style Infos
+    description: スタイルの追加情報
+type: object
+required:
+  - policy
+  - portrait
+  - style_infos
+title: SpeakerInfo
+description: キャラクターの追加情報

@@ -1,0 +1,64 @@
+post:
+  tags:
+    - user_dict_word
+  summary: Add User Dict Word
+  description: ユーザー辞書に言葉を追加します。
+  operationId: add_user_dict_word
+  parameters:
+    - name: surface
+      in: query
+      required: true
+      schema:
+        type: string
+        description: 言葉の表層形
+        title: Surface
+      description: 言葉の表層形
+    - name: pronunciation
+      in: query
+      required: true
+      schema:
+        type: string
+        description: 言葉の発音（カタカナ）
+        title: Pronunciation
+      description: 言葉の発音（カタカナ）
+    - name: accent_type
+      in: query
+      required: true
+      schema:
+        type: integer
+        description: アクセント型（音が下がる場所を指す）
+        title: Accent Type
+      description: アクセント型（音が下がる場所を指す）
+    - name: word_type
+      in: query
+      required: false
+      schema:
+        $ref: ../components/schemas/WordTypes.yaml
+        description: >-
+          PROPER_NOUN（固有名詞）、COMMON_NOUN（普通名詞）、VERB（動詞）、ADJECTIVE（形容詞）、SUFFIX（語尾）のいずれか
+      description: >-
+        PROPER_NOUN（固有名詞）、COMMON_NOUN（普通名詞）、VERB（動詞）、ADJECTIVE（形容詞）、SUFFIX（語尾）のいずれか
+    - name: priority
+      in: query
+      required: false
+      schema:
+        type: integer
+        description: 単語の優先度（0から10までの整数）。数字が大きいほど優先度が高くなる。1から9までの値を指定することを推奨
+        maximum: 10
+        minimum: 0
+        title: Priority
+      description: 単語の優先度（0から10までの整数）。数字が大きいほど優先度が高くなる。1から9までの値を指定することを推奨
+  responses:
+    '200':
+      description: Successful Response
+      content:
+        application/json:
+          schema:
+            type: string
+            title: Response Add User Dict Word User Dict Word Post
+    '422':
+      description: Validation Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/HTTPValidationError.yaml

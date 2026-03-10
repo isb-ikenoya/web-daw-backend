@@ -1,0 +1,40 @@
+description: vvlib(VOICEVOX Library)に関する情報。
+properties:
+  manifest_version:
+    description: マニフェストバージョン
+    title: Manifest Version
+    type: string
+  name:
+    description: 音声ライブラリ名
+    title: Name
+    type: string
+  version:
+    description: 音声ライブラリバージョン
+    title: Version
+    type: string
+  uuid:
+    description: 音声ライブラリのUUID
+    title: Uuid
+    type: string
+  brand_name:
+    description: エンジンのブランド名
+    title: Brand Name
+    type: string
+  engine_name:
+    description: エンジン名
+    title: Engine Name
+    type: string
+  engine_uuid:
+    description: エンジンのUUID
+    title: Engine Uuid
+    type: string
+required:
+  - manifest_version
+  - name
+  - version
+  - uuid
+  - brand_name
+  - engine_name
+  - engine_uuid
+title: VvlibManifest
+type: object

@@ -1,0 +1,88 @@
+openapi: 3.1.0
+info:
+  title: VOICEVOX ENGINE OSS
+  description: VOICEVOX OSS の音声合成エンジンです。
+  version: latest
+paths:
+  /audio_query:
+    $ref: paths/audio_query.yaml
+  /audio_query_from_preset:
+    $ref: paths/audio_query_from_preset.yaml
+  /accent_phrases:
+    $ref: paths/accent_phrases.yaml
+  /mora_data:
+    $ref: paths/mora_data.yaml
+  /mora_length:
+    $ref: paths/mora_length.yaml
+  /mora_pitch:
+    $ref: paths/mora_pitch.yaml
+  /synthesis:
+    $ref: paths/synthesis.yaml
+  /cancellable_synthesis:
+    $ref: paths/cancellable_synthesis.yaml
+  /multi_synthesis:
+    $ref: paths/multi_synthesis.yaml
+  /sing_frame_audio_query:
+    $ref: paths/sing_frame_audio_query.yaml
+  /sing_frame_f0:
+    $ref: paths/sing_frame_f0.yaml
+  /sing_frame_volume:
+    $ref: paths/sing_frame_volume.yaml
+  /frame_synthesis:
+    $ref: paths/frame_synthesis.yaml
+  /connect_waves:
+    $ref: paths/connect_waves.yaml
+  /validate_kana:
+    $ref: paths/validate_kana.yaml
+  /initialize_speaker:
+    $ref: paths/initialize_speaker.yaml
+  /is_initialized_speaker:
+    $ref: paths/is_initialized_speaker.yaml
+  /supported_devices:
+    $ref: paths/supported_devices.yaml
+  /morphable_targets:
+    $ref: paths/morphable_targets.yaml
+  /synthesis_morphing:
+    $ref: paths/synthesis_morphing.yaml
+  /presets:
+    $ref: paths/presets.yaml
+  /add_preset:
+    $ref: paths/add_preset.yaml
+  /update_preset:
+    $ref: paths/update_preset.yaml
+  /delete_preset:
+    $ref: paths/delete_preset.yaml
+  /speakers:
+    $ref: paths/speakers.yaml
+  /speaker_info:
+    $ref: paths/speaker_info.yaml
+  /singers:
+    $ref: paths/singers.yaml
+  /singer_info:
+    $ref: paths/singer_info.yaml
+  /downloadable_libraries:
+    $ref: paths/downloadable_libraries.yaml
+  /installed_libraries:
+    $ref: paths/installed_libraries.yaml
+  /install_library/{library_uuid}:
+    $ref: paths/install_library_{library_uuid}.yaml
+  /uninstall_library/{library_uuid}:
+    $ref: paths/uninstall_library_{library_uuid}.yaml
+  /user_dict:
+    $ref: paths/user_dict.yaml
+  /user_dict_word:
+    $ref: paths/user_dict_word.yaml
+  /user_dict_word/{word_uuid}:
+    $ref: paths/user_dict_word_{word_uuid}.yaml
+  /import_user_dict:
+    $ref: paths/import_user_dict.yaml
+  /version:
+    $ref: paths/version.yaml
+  /core_versions:
+    $ref: paths/core_versions.yaml
+  /engine_manifest:
+    $ref: paths/engine_manifest.yaml
+  /setting:
+    $ref: paths/setting.yaml
+  /:
+    $ref: paths/_.yaml

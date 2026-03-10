@@ -1,0 +1,29 @@
+service: express-lambda-service
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: ap-northeast-1 # AWSリージョンを設定
+  timeout: 30 # Lambda関数のタイムアウト
+  memorySize: 1024 # メモリサイズ
+
+functions:
+  app:
+    handler: fr-api/dist/lambdaHandler.handler
+    events:
+      - http:
+          path: users
+          method: get
+      - http:
+          path: user
+          method: get
+
+package:
+  exclude:
+    - node_modules/**
+    - src/**
+    - tsconfig.json
+    - .gitignore
+
+plugins:
+  - serverless-offline # ローカルでのテストに便利

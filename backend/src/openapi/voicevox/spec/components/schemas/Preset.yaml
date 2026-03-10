@@ -1,0 +1,64 @@
+properties:
+  id:
+    type: integer
+    title: Id
+    description: プリセットID
+  name:
+    type: string
+    title: Name
+    description: プリセット名
+  speaker_uuid:
+    type: string
+    title: Speaker Uuid
+    description: キャラクターのUUID
+  style_id:
+    type: integer
+    title: Style Id
+    description: スタイルID
+  speedScale:
+    type: number
+    title: Speedscale
+    description: 全体の話速
+  pitchScale:
+    type: number
+    title: Pitchscale
+    description: 全体の音高
+  intonationScale:
+    type: number
+    title: Intonationscale
+    description: 全体の抑揚
+  volumeScale:
+    type: number
+    title: Volumescale
+    description: 全体の音量
+  prePhonemeLength:
+    type: number
+    title: Prephonemelength
+    description: 音声の前の無音時間
+  postPhonemeLength:
+    type: number
+    title: Postphonemelength
+    description: 音声の後の無音時間
+  pauseLength:
+    type: number
+    title: Pauselength
+    description: 句読点などの無音時間
+  pauseLengthScale:
+    type: number
+    title: Pauselengthscale
+    description: 句読点などの無音時間（倍率）
+    default: 1
+type: object
+required:
+  - id
+  - name
+  - speaker_uuid
+  - style_id
+  - speedScale
+  - pitchScale
+  - intonationScale
+  - volumeScale
+  - prePhonemeLength
+  - postPhonemeLength
+title: Preset
+description: プリセット情報。

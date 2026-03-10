@@ -1,0 +1,45 @@
+get:
+  tags:
+    - other
+  summary: Speaker Info
+  description: |-
+    UUID で指定された喋れるキャラクターの情報を返します。
+
+    画像や音声はresource_formatで指定した形式で返されます。
+  operationId: speaker_info
+  parameters:
+    - name: speaker_uuid
+      in: query
+      required: true
+      schema:
+        type: string
+        title: Speaker Uuid
+    - name: resource_format
+      in: query
+      required: false
+      schema:
+        enum:
+          - base64
+          - url
+        type: string
+        default: base64
+        title: Resource Format
+    - name: core_version
+      in: query
+      required: false
+      schema:
+        type: string
+        title: Core Version
+  responses:
+    '200':
+      description: Successful Response
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/SpeakerInfo.yaml
+    '422':
+      description: Validation Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/HTTPValidationError.yaml

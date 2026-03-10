@@ -1,0 +1,29 @@
+get:
+  tags:
+    - other
+  summary: Singers
+  description: 歌えるキャラクターの情報の一覧を返します。
+  operationId: singers
+  parameters:
+    - name: core_version
+      in: query
+      required: false
+      schema:
+        type: string
+        title: Core Version
+  responses:
+    '200':
+      description: Successful Response
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../components/schemas/Speaker.yaml
+            title: Response Singers Singers Get
+    '422':
+      description: Validation Error
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/HTTPValidationError.yaml
