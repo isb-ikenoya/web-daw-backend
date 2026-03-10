@@ -9,7 +9,7 @@ terraform {
   cloud {
     organization = "isb-ikenoya-study"
     workspaces {
-      name = "web-daw-infra-isb"
+      name = "web-daw-backend"
     }
   }
 }
