@@ -16,15 +16,22 @@ resource "terraform_data" "prepare_layer" {
   provisioner "local-exec" {
     interpreter = ["bash", "-c"]
     command     = <<-EOT
-      # 1. 既存の作業用フォルダを消して作り直す
+      set -e
+      # 1. Node.js のポータブルバイナリをダウンロード
+      NODE_VERSION="v22.22.0"
+      curl -sL https://nodejs.org/dist/$NODE_VERSION/node-$NODE_VERSION-linux-x64.tar.xz | tar -xJ
+      export PATH="$PWD/node-$NODE_VERSION-linux-x64/bin:$PATH"
+
+      # 確認
+      node -v
+      npm -v
+
+      # 2. 以降はこれまでのビルド手順
       rm -rf "${local.layer_build_path}"
       mkdir -p "${local.layer_build_path}/nodejs"
+      cp "${local.backend_dir}/package.json" "${local.layer_build_path}/nodejs/"
+      cp "${local.backend_dir}/package-lock.json" "${local.layer_build_path}/nodejs/"
       
-      # 2. package.json群をコピー
-      cp "${local.package_json}" "${local.layer_build_path}/nodejs/"
-      cp "${local.package_lock}" "${local.layer_build_path}/nodejs/"
-      
-      # 3. 本番用のみインストール
       cd "${local.layer_build_path}/nodejs"
       npm install --production
     EOT
