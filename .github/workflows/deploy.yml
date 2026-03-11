@@ -18,17 +18,27 @@ jobs:
 
       - name: Build Lambda Layer
         run: |
-          # フォルダ構造を作成してnpm install
-          mkdir -p infra/modules/lambda-node-api/nodejs
-          cp backend/package.json infra/modules/lambda-node-api/nodejs/
-          cp backend/package-lock.json infra/modules/lambda-node-api/nodejs/
+          # 1. 確実に作業ディレクトリを特定
+          TARGET_DIR="infra/modules/lambda-node-api"
 
-          cd infra/modules/lambda-node-api/nodejs
-          npm install --production
+          # 2. 以前の残骸（Gitから降ってきた空Zipなど）を完全に消す
+          rm -f $TARGET_DIR/layer.zip
 
-          # 正しいZipを作成
+          # 3. nodejsフォルダの準備
+          mkdir -p $TARGET_DIR/nodejs
+          cp backend/package.json $TARGET_DIR/nodejs/
+          cp backend/package-lock.json $TARGET_DIR/nodejs/
+
+          # 4. インストール実行
+          cd $TARGET_DIR/nodejs
+          npm install --omit=dev
+
+          # 5. 一つ上のディレクトリに戻って新規に Zip 作成
           cd ..
           zip -r layer.zip nodejs/
+
+          # 6. 確認用（ログにファイルサイズを出して、0バイトじゃないかチェック）
+          ls -lh layer.zip
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
@@ -40,7 +50,7 @@ jobs:
         run: terraform init
         working-directory: ./infra/environments/dev
 
-      - name: Terraform Plan
+      - name: Terraform Apply(Manual)
         # plan だけを実行する
-        run: terraform plan
+        run: terraform apply -input=false
         working-directory: ./infra/environments/dev
