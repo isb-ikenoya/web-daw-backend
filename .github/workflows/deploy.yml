@@ -3,7 +3,15 @@ name: Terraform Deploy
 on:
   push:
     branches: [develop]
+    paths:
+      - "backend/**"
+      - "infra/**"
   pull_request:
+    branches: [develop]
+    paths:
+      - "backend/**" # Lambdaのソースコード
+      - "infra/**" # Terraformコード
+      - ".github/workflows/**" # ワークフロー自体
 
 jobs:
   deploy:
