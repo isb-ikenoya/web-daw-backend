@@ -1,60 +1,5 @@
 locals {
-  backend_dir  = "${path.module}/../../../backend"
-  package_json = "${local.backend_dir}/package.json"
-  package_lock = "${local.backend_dir}/package-lock.json"
-  # レイヤー作成用の作業ディレクトリ
-  layer_build_path = "${path.module}/build_layer"
-  # Zipファイルの出力先をユニークにする（古い空のZipを避けるため）
   layer_zip_path = abspath("${path.module}/layer.zip")
-}
-
-resource "terraform_data" "prepare_layer" {
-  triggers_replace = {
-    # package.json か lockファイルが変わったら再インストール
-    package_json_sha = filesha256(local.package_json)
-    package_lock_sha = filesha256(local.package_lock)
-  }
-
-  provisioner "local-exec" {
-    interpreter = ["bash", "-c"]
-    command     = <<-EOT
-      set -e
-      
-      # 1. Node.js のポータブルバイナリをダウンロード
-      # .tar.xz ではなく .tar.gz を使用し、tar のオプションから J を外して z にする
-      NODE_VERSION="v22.14.0" # 2026年3月時点のLTS最新
-      echo "Downloading Node.js $NODE_VERSION (tar.gz)..."
-      curl -sL https://nodejs.org/dist/$NODE_VERSION/node-$NODE_VERSION-linux-x64.tar.gz | tar -xz
-      
-      export PATH="$PWD/node-$NODE_VERSION-linux-x64/bin:$PATH"
-
-      # 確認
-      node -v
-      npm -v
-
-      # 2. 以降はこれまでのビルド手順（絶対パスを使用）
-      rm -rf "${local.layer_build_path}"
-      mkdir -p "${local.layer_build_path}/nodejs"
-      
-      cp "${local.backend_dir}/package.json" "${local.layer_build_path}/nodejs/"
-      cp "${local.backend_dir}/package-lock.json" "${local.layer_build_path}/nodejs/"
-      
-      cd "${local.layer_build_path}/nodejs"
-      npm install --production
-
-      # 重要：ここで zip コマンドを実行（なければ npm で代用）
-      cd "${local.layer_build_path}"
-      if command -v zip &> /dev/null; then
-        zip -r "${local.layer_zip_path}" nodejs/
-      else
-        echo "zip command not found, using npx bestzip..."
-        npx bestzip "${local.layer_zip_path}" nodejs/
-      fi
-      
-      echo "Layer build and zip complete."
-    EOT
-  }
-  input = local.layer_build_path
 }
 
 resource "aws_lambda_layer_version" "demo_layer" {
@@ -64,7 +9,6 @@ resource "aws_lambda_layer_version" "demo_layer" {
   source_code_hash    = filebase64sha256(local.layer_zip_path)
   layer_name          = "layer-demo-ikenoya"
   compatible_runtimes = ["nodejs22.x"]
-  depends_on          = [terraform_data.prepare_layer]
 }
 
 # lambdaソース格納用のS3bucketを作成する
