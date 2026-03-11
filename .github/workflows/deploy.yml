@@ -50,7 +50,7 @@ jobs:
         run: terraform init
         working-directory: ./infra/environments/dev
 
-      - name: Terraform Apply(Manual)
+      - name: Terraform Plan
         # plan だけを実行する
-        run: terraform apply -input=false
+        run: terraform plan -input=false
         working-directory: ./infra/environments/dev
