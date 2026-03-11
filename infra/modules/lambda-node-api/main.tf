@@ -5,7 +5,7 @@ locals {
   # レイヤー作成用の作業ディレクトリ
   layer_build_path = "${path.module}/build_layer"
   # Zipファイルの出力先をユニークにする（古い空のZipを避けるため）
-  layer_zip_path = abspath("${path.module}/layer_v1.zip")
+  layer_zip_path = abspath("${path.module}/layer.zip")
 }
 
 resource "terraform_data" "prepare_layer" {
@@ -59,9 +59,9 @@ resource "terraform_data" "prepare_layer" {
 
 resource "aws_lambda_layer_version" "demo_layer" {
   # 生成されたファイルを直接指定
-  filename = fileexists(local.layer_zip_path) ? local.layer_zip_path : null
+  filename = local.layer_zip_path
   # Plan時のエラーを防ぐため、ファイルがあればハッシュを取り、なければ一旦 null にする
-  source_code_hash    = fileexists(local.layer_zip_path) ? filebase64sha256(local.layer_zip_path) : null
+  source_code_hash    = filebase64sha256(local.layer_zip_path)
   layer_name          = "layer-demo-ikenoya"
   compatible_runtimes = ["nodejs22.x"]
   depends_on          = [terraform_data.prepare_layer]
