@@ -52,6 +52,7 @@ data "archive_file" "layer_zip" {
 
 resource "aws_lambda_layer_version" "demo_layer" {
   filename            = data.archive_file.layer_zip.output_path
+  source_code_hash    = data.archive_file.layer_zip.output_base64sha256
   layer_name          = "layer-demo-ikenoya"
   compatible_runtimes = ["nodejs22.x"]
 }
