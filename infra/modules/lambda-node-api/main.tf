@@ -4,6 +4,8 @@ locals {
   package_lock = "${local.backend_dir}/package-lock.json"
   # レイヤー作成用の作業ディレクトリ
   layer_build_path = "${path.module}/build_layer"
+  # Zipファイルの出力先をユニークにする（古い空のZipを避けるため）
+  layer_zip_path = abspath("${path.module}/layer_v1.zip")
 }
 
 resource "terraform_data" "prepare_layer" {
@@ -40,26 +42,29 @@ resource "terraform_data" "prepare_layer" {
       cd "${local.layer_build_path}/nodejs"
       npm install --production
 
-      # 最後に「ビルド完了フラグ」としてタイムスタンプファイルを作成
-      date > "${local.layer_build_path}/build_complete.txt"
+      # 重要：ここで zip コマンドを実行（なければ npm で代用）
+      cd "${local.layer_build_path}"
+      if command -v zip &> /dev/null; then
+        zip -r "${local.layer_zip_path}" nodejs/
+      else
+        echo "zip command not found, using npx bestzip..."
+        npx bestzip "${local.layer_zip_path}" nodejs/
+      fi
+      
+      echo "Layer build and zip complete."
     EOT
   }
   input = local.layer_build_path
 }
 
-data "archive_file" "layer_zip" {
-  type        = "zip"
-  source_dir  = local.layer_build_path
-  output_path = "${path.module}/layer.zip"
-  depends_on  = [terraform_data.prepare_layer]
-}
-
 resource "aws_lambda_layer_version" "demo_layer" {
-  filename            = data.archive_file.layer_zip.output_path
-  source_code_hash    = data.archive_file.layer_zip.output_base64sha256
+  # 生成されたファイルを直接指定
+  filename = local.layer_zip_path
+  # Plan時のエラーを防ぐため、ファイルがあればハッシュを取り、なければ一旦 null にする
+  source_code_hash    = fileexists(local.layer_zip_path) ? filebase64sha256(local.layer_zip_path) : null
   layer_name          = "layer-demo-ikenoya"
   compatible_runtimes = ["nodejs22.x"]
-  depends_on          = [data.archive_file.layer_zip]
+  depends_on          = [terraform_data.prepare_layer]
 }
 
 # lambdaソース格納用のS3bucketを作成する
