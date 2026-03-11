@@ -6,7 +6,7 @@ resource "aws_lambda_layer_version" "demo_layer" {
   # 生成されたファイルを直接指定
   filename = local.layer_zip_path
   # Plan時のエラーを防ぐため、ファイルがあればハッシュを取り、なければ一旦 null にする
-  source_code_hash    = filebase64sha256(local.layer_zip_path)
+  source_code_hash    = fileexists(local.layer_zip_path) ? filebase64sha256(local.layer_zip_path) : null
   layer_name          = "layer-demo-ikenoya"
   compatible_runtimes = ["nodejs22.x"]
 }
