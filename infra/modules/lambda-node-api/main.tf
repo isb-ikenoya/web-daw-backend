@@ -1,3 +1,49 @@
+locals {
+  backend_dir  = "${path.module}/../../../../backend"
+  package_json = "${local.backend_dir}/package.json"
+  package_lock = "${local.backend_dir}/package-lock.json"
+  # レイヤー作成用の作業ディレクトリ
+  layer_build_path = "${path.module}/build_layer"
+}
+
+resource "terraform_data" "prepare_layer" {
+  triggers_replace = {
+    # package.json か lockファイルが変わったら再インストール
+    package_json_sha = filesha256(local.package_json)
+    package_lock_sha = filesha256(local.package_lock)
+  }
+
+  provisioner "local-exec" {
+    interpreter = ["bash", "-c"]
+    command     = <<-EOT
+      # 1. 既存の作業用フォルダを消して作り直す
+      rm -rf "${local.layer_build_path}"
+      mkdir -p "${local.layer_build_path}/nodejs"
+      
+      # 2. package.json群をコピー
+      cp "${local.package_json}" "${local.layer_build_path}/nodejs/"
+      cp "${local.package_lock}" "${local.layer_build_path}/nodejs/"
+      
+      # 3. 本番用のみインストール
+      cd "${local.layer_build_path}/nodejs"
+      npm install --production
+    EOT
+  }
+}
+
+data "archive_file" "layer_zip" {
+  type        = "zip"
+  source_dir  = local.layer_build_path
+  output_path = "${path.module}/layer.zip"
+  depends_on  = [terraform_data.prepare_layer]
+}
+
+resource "aws_lambda_layer_version" "demo_layer" {
+  filename            = data.archive_file.layer_zip.output_path
+  layer_name          = "layer-demo-ikenoya"
+  compatible_runtimes = ["nodejs22.x"]
+}
+
 # lambdaソース格納用のS3bucketを作成する
 resource "aws_s3_bucket" "lambda" {
   bucket = var.bucket_name
