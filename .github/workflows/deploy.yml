@@ -8,6 +8,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read # コードの読み取り
+      pull-requests: write # PRへのコメント書き込み権限
     steps:
       - name: Checkout
         uses: actions/checkout@v4
