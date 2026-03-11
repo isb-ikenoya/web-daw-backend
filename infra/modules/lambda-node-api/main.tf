@@ -59,7 +59,7 @@ resource "terraform_data" "prepare_layer" {
 
 resource "aws_lambda_layer_version" "demo_layer" {
   # 生成されたファイルを直接指定
-  filename = local.layer_zip_path
+  filename = fileexists(local.layer_zip_path) ? local.layer_zip_path : null
   # Plan時のエラーを防ぐため、ファイルがあればハッシュを取り、なければ一旦 null にする
   source_code_hash    = fileexists(local.layer_zip_path) ? filebase64sha256(local.layer_zip_path) : null
   layer_name          = "layer-demo-ikenoya"
