@@ -114,6 +114,8 @@ resource "aws_lambda_function" "api" {
   s3_bucket = aws_s3_bucket.lambda.id
   s3_key    = aws_s3_object.dummy.key
 
+  layers = [aws_lambda_layer_version.demo_layer.arn]
+
   lifecycle {
     # 重要：GitHub Actions 側で書き換えられる項目を無視する設定
     ignore_changes = [
