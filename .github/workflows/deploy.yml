@@ -52,5 +52,5 @@ jobs:
 
       - name: Terraform Plan
         # plan だけを実行する
-        run: terraform plan -input=false
+        run: terraform plan
         working-directory: ./infra/environments/dev
