@@ -93,8 +93,8 @@ resource "aws_iam_role" "lambda_exec" {
 resource "aws_lambda_function" "api" {
   function_name = "${var.project}-${var.env}-api"
   role          = aws_iam_role.lambda_exec.arn
-  handler       = "index.handler" # serverless-express のエントリーポイント
-  runtime       = "nodejs24.x"
+  handler       = "lambdaHandler.handler" # serverless-express のエントリーポイント
+  runtime       = "nodejs22.x"
   timeout       = 30
   memory_size   = 128
 
