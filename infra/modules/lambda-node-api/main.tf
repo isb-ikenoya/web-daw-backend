@@ -1,5 +1,5 @@
 locals {
-  backend_dir  = "${path.module}/../../../../backend"
+  backend_dir  = "${path.module}/../../../backend"
   package_json = "${local.backend_dir}/package.json"
   package_lock = "${local.backend_dir}/package-lock.json"
   # レイヤー作成用の作業ディレクトリ
