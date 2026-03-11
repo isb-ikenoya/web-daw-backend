@@ -17,18 +17,23 @@ resource "terraform_data" "prepare_layer" {
     interpreter = ["bash", "-c"]
     command     = <<-EOT
       set -e
+      
       # 1. Node.js のポータブルバイナリをダウンロード
-      NODE_VERSION="v22.22.0"
-      curl -sL https://nodejs.org/dist/$NODE_VERSION/node-$NODE_VERSION-linux-x64.tar.xz | tar -xJ
+      # .tar.xz ではなく .tar.gz を使用し、tar のオプションから J を外して z にする
+      NODE_VERSION="v22.14.0" # 2026年3月時点のLTS最新
+      echo "Downloading Node.js $NODE_VERSION (tar.gz)..."
+      curl -sL https://nodejs.org/dist/$NODE_VERSION/node-$NODE_VERSION-linux-x64.tar.gz | tar -xz
+      
       export PATH="$PWD/node-$NODE_VERSION-linux-x64/bin:$PATH"
 
       # 確認
       node -v
       npm -v
 
-      # 2. 以降はこれまでのビルド手順
+      # 2. 以降はこれまでのビルド手順（絶対パスを使用）
       rm -rf "${local.layer_build_path}"
       mkdir -p "${local.layer_build_path}/nodejs"
+      
       cp "${local.backend_dir}/package.json" "${local.layer_build_path}/nodejs/"
       cp "${local.backend_dir}/package-lock.json" "${local.layer_build_path}/nodejs/"
       
