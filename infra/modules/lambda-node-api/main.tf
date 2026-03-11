@@ -39,11 +39,12 @@ resource "terraform_data" "prepare_layer" {
       
       cd "${local.layer_build_path}/nodejs"
       npm install --production
-      
+
       # 最後に「ビルド完了フラグ」としてタイムスタンプファイルを作成
       date > "${local.layer_build_path}/build_complete.txt"
     EOT
   }
+  input = local.layer_build_path
 }
 
 data "archive_file" "layer_zip" {
