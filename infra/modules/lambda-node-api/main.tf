@@ -39,6 +39,9 @@ resource "terraform_data" "prepare_layer" {
       
       cd "${local.layer_build_path}/nodejs"
       npm install --production
+      
+      # 最後に「ビルド完了フラグ」としてタイムスタンプファイルを作成
+      date > "${local.layer_build_path}/build_complete.txt"
     EOT
   }
 }
@@ -55,6 +58,7 @@ resource "aws_lambda_layer_version" "demo_layer" {
   source_code_hash    = data.archive_file.layer_zip.output_base64sha256
   layer_name          = "layer-demo-ikenoya"
   compatible_runtimes = ["nodejs22.x"]
+  depends_on          = [data.archive_file.layer_zip]
 }
 
 # lambdaソース格納用のS3bucketを作成する
