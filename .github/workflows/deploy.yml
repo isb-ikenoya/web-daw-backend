@@ -50,11 +50,11 @@ jobs:
           cp backend/package.json $TARGET_DIR/
           cp backend/package-lock.json $TARGET_DIR/
 
-          cd $TARGET_DIR
-          npm ci --omit=dev
+          npm ci --omit=dev --prefix $TARGET_DIR
 
           # 確認: layer_content の直下に nodejs がある状態にする
-          ls -d $BASE_DIR/nodejs
+          ls -d $TARGET_DIR
+          echo "Layer directory structure prepared at $TARGET_DIR"
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
