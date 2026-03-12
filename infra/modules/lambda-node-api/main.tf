@@ -7,7 +7,7 @@ resource "aws_lambda_layer_version" "demo_layer" {
   filename = local.layer_zip_path
   # Plan時のエラーを防ぐため、ファイルがあればハッシュを取り、なければ一旦 null にする
   # オリジナルのpackage-lock.jsonで判定
-  # テストコメント1
+  # テストコメント2
   source_code_hash    = var.package_lock_hash
   layer_name          = "layer-demo-ikenoya"
   compatible_runtimes = ["nodejs22.x"]
