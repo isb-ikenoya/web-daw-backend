@@ -62,7 +62,7 @@ jobs:
           # 6. 確認用（ログにファイルサイズを出して、0バイトじゃないかチェック）
           ls -lh layer.zip
 
-      - name: Verify Zip existence
+      - name: Verify Zip existence（生成zip確認）
         run: ls -lh infra/modules/lambda-node-api/layer.zip
 
       - name: Setup Terraform
