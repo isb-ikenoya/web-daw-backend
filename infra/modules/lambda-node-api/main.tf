@@ -4,7 +4,7 @@
 
 data "archive_file" "layer_zip" {
   type        = "zip"
-  source_dir  = "${path.module}/nodejs" # ビルド済みのnodejsフォルダを指定
+  source_dir  = "${path.module}/layer_content"
   output_path = "${path.module}/layer.zip"
 }
 
