@@ -28,7 +28,17 @@ jobs:
         with:
           node-version: 22
 
+      - name: Check for source changes
+        id: cache-npm
+        uses: actions/cache@v4
+        with:
+          path: infra/modules/lambda-node-api/layer.zip
+          # package-lock.json のハッシュをキーにする
+          key: ${{ runner.os }}-node-${{ hashFiles('backend/package-lock.json') }}
+
       - name: Build Lambda Layer
+        # キャッシュがヒットした（＝package-lockが同じ）場合はビルドをスキップ
+        if: steps.cache-npm.outputs.cache-hit != 'true'
         run: |
           # 1. 確実に作業ディレクトリを特定
           TARGET_DIR="infra/modules/lambda-node-api"
