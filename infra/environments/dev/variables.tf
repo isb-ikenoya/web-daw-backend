@@ -9,3 +9,8 @@ variable "domain" {
   type        = string
   sensitive   = true
 }
+
+variable "package_lock_hash" {
+  description = "backend/package-lock.json のハッシュ値"
+  type        = string
+}
