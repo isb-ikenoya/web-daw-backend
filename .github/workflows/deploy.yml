@@ -76,7 +76,7 @@ jobs:
         run: terraform init
         working-directory: ./infra/environments/dev
 
-        # --- 1. PR作成時に Plan を実行して結果をコメントする ---
+        # PR作成時に Plan を実行して結果をコメントする
       - name: Terraform Plan
         if: github.event_name == 'pull_request'
         id: plan
