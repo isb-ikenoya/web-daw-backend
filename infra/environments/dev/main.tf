@@ -53,10 +53,10 @@ module "cloud_front" {
 }
 
 module "codegenie-api" {
-  source            = "../../modules/lambda-node-api"
-  env               = local.env
-  project           = local.project
-  bucket_name       = "${local.project}-${local.env}-api-bucket"
-  package_lock_hash = var.package_lock_hash
-  owner             = local.owner
+  source      = "../../modules/lambda-node-api"
+  env         = local.env
+  project     = local.project
+  bucket_name = "${local.project}-${local.env}-api-bucket"
+  # package_lock_hash = var.package_lock_hash
+  owner = local.owner
 }

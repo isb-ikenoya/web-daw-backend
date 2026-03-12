@@ -10,7 +10,7 @@ variable "domain" {
   sensitive   = true
 }
 
-variable "package_lock_hash" {
+/*variable "package_lock_hash" {
   description = "backend/package-lock.json のハッシュ値"
   type        = string
-}
+}*/

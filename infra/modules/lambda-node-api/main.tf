@@ -1,14 +1,20 @@
-locals {
+/*locals {
   layer_zip_path = abspath("${path.module}/layer.zip")
+}*/
+
+data "archive_file" "layer_zip" {
+  type        = "zip"
+  source_dir  = "${path.module}/nodejs" # ビルド済みのnodejsフォルダを指定
+  output_path = "${path.module}/layer.zip"
 }
 
 resource "aws_lambda_layer_version" "demo_layer" {
   # 生成されたファイルを直接指定
-  filename = local.layer_zip_path
+  filename = data.archive_file.layer_zip.output_path
   # Plan時のエラーを防ぐため、ファイルがあればハッシュを取り、なければ一旦 null にする
   # オリジナルのpackage-lock.jsonで判定
   # テストコメント3
-  source_code_hash    = var.package_lock_hash != "" ? base64encode(var.package_lock_hash) : null
+  source_code_hash    = data.archive_file.layer_zip.output_base64sha256
   layer_name          = "layer-demo-ikenoya"
   compatible_runtimes = ["nodejs22.x"]
 }
