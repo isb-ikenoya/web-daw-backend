@@ -41,20 +41,20 @@ jobs:
         # キャッシュがヒットした（＝package-lockが同じ）場合はビルドをスキップ
         # if: steps.cache-zip.outputs.cache-hit != 'true'
         run: |
+          # 作業用の一時親ディレクトリを作成
+          BASE_DIR="infra/modules/lambda-node-api/layer_content"
           # 1. 確実に作業ディレクトリを特定
-          TARGET_DIR="infra/modules/lambda-node-api"
+          TARGET_DIR="$BASE_DIR/nodejs"
 
-          # 2. 以前の残骸（Gitから降ってきた空Zipなど）を完全に消す
-          rm -f $TARGET_DIR/layer.zip
+          mkdir -p $TARGET_DIR
+          cp backend/package.json $TARGET_DIR/
+          cp backend/package-lock.json $TARGET_DIR/
 
-          # 3. nodejsフォルダの準備
-          mkdir -p $TARGET_DIR/nodejs
-          cp backend/package.json $TARGET_DIR/nodejs/
-          cp backend/package-lock.json $TARGET_DIR/nodejs/
+          cd $TARGET_DIR
+          npm ci --omit=dev
 
-          # 4. インストール実行
-          cd $TARGET_DIR/nodejs
-          npm install --omit=dev
+          # 確認: layer_content の直下に nodejs がある状態にする
+          ls -d $BASE_DIR/nodejs
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
