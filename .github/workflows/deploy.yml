@@ -80,7 +80,7 @@ jobs:
       - name: Terraform Plan
         if: github.event_name == 'pull_request'
         id: plan
-        run: terraform plan -no-color
+        run: terraform plan -no-color -var="package_lock_hash=${{ hashFiles('backend/package-lock.json') }}"
         working-directory: ./infra/environments/dev
         continue-on-error: true
 
@@ -111,5 +111,5 @@ jobs:
 
       - name: Terraform Apply
         if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
-        run: terraform apply -auto-approve
+        run: terraform apply -auto-approve -var="package_lock_hash=${{ hashFiles('backend/package-lock.json') }}"
         working-directory: ./infra/environments/dev
