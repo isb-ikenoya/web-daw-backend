@@ -54,7 +54,7 @@ jobs:
           npm ci
           npm run build
           mkdir -p ../infra/modules/lambda-node-api/api_content
-          cp -r build/* ../infra/modules/lambda-node-api/api_content/
+          cp -r dist/* ../infra/modules/lambda-node-api/api_content/
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
