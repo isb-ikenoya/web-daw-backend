@@ -20,7 +20,7 @@ resource "aws_s3_bucket" "layer_upload" {
 
 resource "aws_s3_object" "layer_upload" {
   count  = var.layer_upload_s3 != null ? 1 : 0
-  bucket = aws_s3_bucket.layer_upload.bucket
+  bucket = var.layer_upload_s3.bucket_name
   key    = var.layer_upload_s3.key
 
   # アーカイブしたzipファイルを指定
