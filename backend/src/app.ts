@@ -2,7 +2,10 @@ import path from "path";
 import dotenv from "dotenv";
 
 // NODE_ENVの設定に基づいて.envファイルを選択
-const envFile = path.resolve(__dirname, `../envs/.env.${process.env.NODE_ENV}.local`);
+const envFile = path.resolve(
+  __dirname,
+  `../envs/.env.${process.env.NODE_ENV}.local`,
+);
 // 環境変数を読み込み
 dotenv.config({ path: envFile });
 
@@ -25,7 +28,7 @@ app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
     extended: true,
-  })
+  }),
 );
 
 useExpressServer(app, {
@@ -39,9 +42,9 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   console.error("エラーメッセージ:", err.message);
   if (err.name === "UnauthorizedError") {
     // 認証エラーの場合は403
-    res.status(403).json({ message: "認証エラー: アクセスが拒否されました" });
+    res.status(403).json({ message: "認証エラー: アクセスが拒否されました。" });
   } else {
-    res.status(500).json({ message: "不明なエラーが発生しました" });
+    res.status(500).json({ message: "不明なエラーが発生しました。" });
   }
 });
 
