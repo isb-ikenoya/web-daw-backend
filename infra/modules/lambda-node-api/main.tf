@@ -50,6 +50,13 @@ resource "aws_lambda_layer_version" "demo_layer" {
   source_code_hash = data.archive_file.layer_zip.output_base64sha256
 }
 
+data "archive_file" "api_zip" {
+  type = "zip"
+  # api_content の「中身」が Zip のルートになる
+  source_dir  = "${path.module}/api_content"
+  output_path = "${path.module}/api_deploy.zip"
+}
+
 # lambdaソース格納用のS3bucketを作成する
 resource "aws_s3_bucket" "lambda" {
   bucket = var.bucket_name
@@ -59,23 +66,25 @@ resource "aws_s3_bucket" "lambda" {
   }
 }
 
-# 初回デプロイ用のダミーオブジェクト
-resource "aws_s3_object" "dummy" {
+# API用S3
+resource "aws_s3_object" "api" {
   bucket = aws_s3_bucket.lambda.id
-  key    = "initial/lambda_fix_v4.zip"
-  # リポジトリにあるzipファイルを直接指定
-  source = "${path.module}/dummy.zip"
+  key    = "api_deploy/${substr(data.archive_file.api_zip.output_sha, 0, 8)}.zip"
+  # アーカイブしたzipファイルを指定
+  source = data.archive_file.api_zip.output_path
+  # ファイル変更時に再アップロードを促す
+  source_hash = data.archive_file.api_zip.output_base64sha256
   # 以前の失敗したキャッシュを上書きするために etag を設定
-  etag = filemd5("${path.module}/dummy.zip")
+  # etag = filemd5("${path.module}/dummy.zip")
 
   tags = {
     "created_by" = var.owner
   }
 
-  lifecycle {
+  /*lifecycle {
     # 一度作ったら、中身が手動やCIで変わっても無視する（ソースコードの変更を検知したくない）
     ignore_changes = [source, etag]
-  }
+  }*/
 }
 
 resource "aws_iam_role" "lambda_exec" {
@@ -106,17 +115,17 @@ resource "aws_lambda_function" "api" {
 
   # S3からコードを読み込む設定
   s3_bucket = aws_s3_bucket.lambda.id
-  s3_key    = aws_s3_object.dummy.key
+  s3_key    = aws_s3_object.api.key
 
   layers = [aws_lambda_layer_version.demo_layer.arn]
 
-  lifecycle {
+  /*lifecycle {
     # 重要：GitHub Actions 側で書き換えられる項目を無視する設定
     ignore_changes = [
       s3_key,
       source_code_hash,
     ]
-  }
+  }*/
 
   tags = {
     "created_by" = var.owner
