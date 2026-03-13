@@ -119,6 +119,13 @@ resource "aws_lambda_function" "api" {
 
   layers = [aws_lambda_layer_version.demo_layer.arn]
 
+  environment {
+    variables = {
+      AUTH0_DOMAIN   = var.auth0_domain
+      AUTH0_AUDIENCE = var.auth0_audience
+    }
+  }
+
   /*lifecycle {
     # 重要：GitHub Actions 側で書き換えられる項目を無視する設定
     ignore_changes = [
