@@ -62,6 +62,8 @@ module "codegenie-api" {
     key         = "layers/nodejs-api.zip"
   }
   # package_lock_hash = var.package_lock_hash
-  owner = local.owner
+  owner          = local.owner
+  auth0_domain   = var.auth0_domain
+  auth0_audience = var.auth0_audience
   # テスト1
 }
