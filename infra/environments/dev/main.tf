@@ -57,6 +57,10 @@ module "codegenie-api" {
   env         = local.env
   project     = local.project
   bucket_name = "${local.project}-${local.env}-api-bucket"
+  layer_upload_s3 = {
+    bucket_name = "${local.project}-${local.env}-api-layer-bucket"
+    key         = "layers/nodejs-api.zip"
+  }
   # package_lock_hash = var.package_lock_hash
   owner = local.owner
 }
