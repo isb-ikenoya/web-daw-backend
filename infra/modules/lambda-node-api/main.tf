@@ -8,15 +8,46 @@ data "archive_file" "layer_zip" {
   output_path = "${path.module}/layer.zip"
 }
 
+# レイヤーアップロード用S3
+resource "aws_s3_bucket" "layer_upload" {
+  # バケット名が指定されている場合のみ作成(1：作成、0：作成しない)
+  count  = var.layer_upload_s3 != null ? 1 : 0
+  bucket = var.layer_upload_s3.bucket_name
+  tags = {
+    "created_by" = var.owner
+  }
+}
+
+resource "aws_s3_object" "layer_upload" {
+  count  = var.layer_upload_s3 != null ? 1 : 0
+  bucket = aws_s3_bucket.layer_upload.bucket
+  key    = var.layer_upload_s3.key
+
+  # アーカイブしたzipファイルを指定
+  source = data.archive_file.layer_zip.output_path
+
+  # ファイル変更時に再アップロードを促す
+  source_hash = data.archive_file.layer_zip.output_base64sha256
+
+  tags = {
+    "created_by" = var.owner
+  }
+}
+
 resource "aws_lambda_layer_version" "demo_layer" {
-  # 生成されたファイルを直接指定
-  filename = data.archive_file.layer_zip.output_path
-  # Plan時のエラーを防ぐため、ファイルがあればハッシュを取り、なければ一旦 null にする
-  # オリジナルのpackage-lock.jsonで判定
-  # テストコメント5
-  source_code_hash    = data.archive_file.layer_zip.output_base64sha256
   layer_name          = "layer-demo-ikenoya"
   compatible_runtimes = ["nodejs22.x"]
+
+  # --- S3経由の場合 ---
+  s3_bucket = try(var.layer_upload_s3.bucket_name, null)
+  s3_key    = try(var.layer_upload_s3.key, null)
+  # S3オブジェクトが更新されたらレイヤーも更新されるように紐付け
+  s3_object_version = var.layer_upload_s3 != null ? aws_s3_object.layer_upload[0].version_id : null
+
+  # --- zipアップロードの場合 ---
+  # 生成されたファイルを直接指定
+  filename         = var.layer_upload_s3 == null ? data.archive_file.layer_zip.output_path : null
+  source_code_hash = data.archive_file.layer_zip.output_base64sha256
 }
 
 # lambdaソース格納用のS3bucketを作成する
