@@ -18,7 +18,18 @@ variable "owner" {
   type        = string
 }
 
+variable "layer_upload_s3" {
+  description = "LambdaレイヤーにS3を使用する場合に使用する（Optional）"
+  type = object({
+    bucket_name = string
+    key         = string
+  })
+  default = null
+}
+
 /*variable "package_lock_hash" {
   description = "backend/package-lock.json のハッシュ値"
   type        = string
 }*/
+
+
