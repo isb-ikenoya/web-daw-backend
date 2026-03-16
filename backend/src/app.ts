@@ -9,7 +9,7 @@ const envFile = path.resolve(
 // 環境変数を読み込み
 dotenv.config({ path: envFile });
 
-import express, { NextFunction, Request, Response, Router } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import { useExpressServer } from "routing-controllers";
 import { UserController } from "./controllers/userController";
 import "reflect-metadata";
