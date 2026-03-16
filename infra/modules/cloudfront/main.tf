@@ -1,3 +1,8 @@
+locals {
+  # API Gatewayのエンドポイントから "https://" を取り除いたドメイン名を取得
+  api_gw_origin_domain = replace(var.lambda_apigateway_endpoint, "https://", "")
+}
+
 # OACの設定
 resource "aws_cloudfront_origin_access_control" "s3" {
   name                              = "${var.project}-${var.env}-s3-oac"
@@ -43,8 +48,20 @@ resource "aws_cloudfront_distribution" "this" {
     }*/
   }
 
-  # Lambda
+  # Lambda（API Gateway）
+  origin {
+    domain_name = local.api_gw_origin_domain
+    origin_id   = "APIGatewayOrigin"
 
+    custom_origin_config {
+      http_port              = 80
+      https_port             = 443
+      origin_protocol_policy = "https-only" # API GatewayはHTTPS必須
+      origin_ssl_protocols   = ["TLSv1.2"]
+    }
+  }
+
+  # S3 Front
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
     cached_methods   = ["GET", "HEAD"]
@@ -60,6 +77,33 @@ resource "aws_cloudfront_distribution" "this" {
     default_ttl            = 3600
     max_ttl                = 86400
     compress               = true
+  }
+
+  # Lambda
+  ordered_cache_behavior {
+    path_pattern     = "/api/*" # /api/ で始まるアクセスを対象にする
+    allowed_methods  = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
+    cached_methods   = ["GET", "HEAD"]
+    target_origin_id = "APIGatewayOrigin"
+
+    # APIなので基本はキャッシュさせない設定
+    default_ttl = 0
+    min_ttl     = 0
+    max_ttl     = 0
+
+    # どの情報をオリジン（API GW）に渡すか
+    forwarded_values {
+      query_string = true
+
+      # 重要：Hostヘッダーは含めない（API Gatewayが自身のURL以外を拒否するため）
+      headers = ["Accept", "Authorization", "Content-Type"]
+
+      cookies {
+        forward = "all"
+      }
+    }
+
+    viewer_protocol_policy = "redirect-to-https"
   }
 
   # 証明書
