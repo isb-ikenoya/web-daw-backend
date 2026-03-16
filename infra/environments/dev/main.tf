@@ -39,19 +39,6 @@ module "acm" {
   depends_on = [module.route53]
 }
 
-module "cloud_front" {
-  source              = "../../modules/cloudfront"
-  owner               = local.owner
-  env                 = local.env
-  project             = local.project
-  acm_certificate_arn = module.acm.certificate_arn
-  origin_domain_name  = module.s3_front_end.domain_name
-  origin_id           = "S3-${module.s3_front_end.bucket_name}"
-  s3_bucket_id        = module.s3_front_end.bucket_id
-  s3_bucket_arn       = module.s3_front_end.bucket_arn
-  aliase_domain       = var.domain
-}
-
 module "codegenie-api" {
   source      = "../../modules/lambda-node-api"
   env         = local.env
@@ -66,4 +53,18 @@ module "codegenie-api" {
   auth0_domain   = var.auth0_domain
   auth0_audience = var.auth0_audience
   # テスト1
+}
+
+module "cloud_front" {
+  source                     = "../../modules/cloudfront"
+  owner                      = local.owner
+  env                        = local.env
+  project                    = local.project
+  acm_certificate_arn        = module.acm.certificate_arn
+  origin_domain_name         = module.s3_front_end.domain_name
+  origin_id                  = "S3-${module.s3_front_end.bucket_name}"
+  s3_bucket_id               = module.s3_front_end.bucket_id
+  s3_bucket_arn              = module.s3_front_end.bucket_arn
+  aliase_domain              = var.domain
+  lambda_apigateway_endpoint = module.codegenie-api.apigateway_endpoint
 }

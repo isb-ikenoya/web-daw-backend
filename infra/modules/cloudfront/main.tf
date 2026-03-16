@@ -1,6 +1,6 @@
 locals {
   # API Gatewayのエンドポイントから "https://" を取り除いたドメイン名を取得
-  api_gw_origin_domain = replace(aws_apigatewayv2_api.this.api_endpoint, "https://", "")
+  api_gw_origin_domain = replace(var.lambda_apigateway_endpoint, "https://", "")
 }
 
 # OACの設定

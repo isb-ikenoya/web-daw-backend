@@ -40,3 +40,8 @@ variable "aliase_domain" {
   description = "代替ドメイン"
   type        = string
 }
+
+variable "lambda_apigateway_endpoint" {
+  description = "LambdaのAPI Gatewayエンドポイント"
+  type        = string
+}
