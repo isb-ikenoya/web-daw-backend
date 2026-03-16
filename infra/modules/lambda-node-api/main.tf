@@ -171,7 +171,7 @@ resource "aws_apigatewayv2_integration" "lambda_integration" {
 
 resource "aws_apigatewayv2_route" "api_route" {
   api_id    = aws_apigatewayv2_api.this.id
-  route_key = "ANY /{proxy+}" # すべてのリクエストを受け付ける
+  route_key = "$default" # すべてのリクエストを受け付ける
   target    = "integrations/${aws_apigatewayv2_integration.lambda_integration.id}"
 }
 
