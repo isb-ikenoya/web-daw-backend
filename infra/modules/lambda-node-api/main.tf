@@ -177,8 +177,8 @@ resource "aws_apigatewayv2_route" "api_route" {
 
 resource "aws_apigatewayv2_stage" "lambda_stage" {
   api_id      = aws_apigatewayv2_api.this.id
-  name        = "main-stage"
-  auto_deploy = true # 変更を即時反映
+  name        = "$default" # ルート直下で実行
+  auto_deploy = true       # 変更を即時反映
 }
 
 # Lambdaの権限設定（Api Gatewayから叩けるようにする）
@@ -191,3 +191,5 @@ resource "aws_lambda_permission" "api_gw" {
   # どのAPI Gatewayからの呼び出しを許可するか（セキュリティ上、絞るのがベスト）
   source_arn = "${aws_apigatewayv2_api.this.execution_arn}/*/*"
 }
+
+

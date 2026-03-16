@@ -33,6 +33,7 @@ resource "aws_cloudfront_distribution" "this" {
     }
   }
 
+  # フロントエンド
   origin {
     domain_name              = var.origin_domain_name
     origin_id                = var.origin_id                              # オリジンの一意のID
@@ -41,6 +42,8 @@ resource "aws_cloudfront_distribution" "this" {
       origin_access_identity = var.origin_access_identity
     }*/
   }
+
+  # Lambda
 
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
