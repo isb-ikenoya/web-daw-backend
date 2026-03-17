@@ -70,7 +70,7 @@ jobs:
       - name: Terraform Plan
         if: github.event_name == 'pull_request'
         id: plan
-        run: terraform plan -no-color -parallelism=20
+        run: terraform plan -no-color
         working-directory: ./infra/environments/dev
         continue-on-error: true
 
@@ -101,5 +101,5 @@ jobs:
 
       - name: Terraform Apply
         if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
-        run: terraform apply -auto-approve -parallelism=20
+        run: terraform apply -auto-approve
         working-directory: ./infra/environments/dev
